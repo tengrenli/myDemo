@@ -1,0 +1,10 @@
+.DS_Store
+/dist/*
+node_modules
+npm-debug.log*
+yarn.lock
+.vscode
+.dea
+.xml
+.history
+/hf_project/*
