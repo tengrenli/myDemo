@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.min.js"
+      integrity="sha512-BKbSR+cfyxLdMAsE0naLReFSLg8/pjbgfxHh/k/kUC82Hy7r6HtR5hLhobaln2gcTvzkyyehrdREdjpsQwy2Jw=="
+      crossorigin="anonymous"
+    ></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"><my-component msg="hello world"></my-component></div>
+    <div id="app1">{{ msg2 }}</div>
+    <script>
+      // 注册
+      Vue.component('my-component', {
+        // _isComponent: true,
+        props: ['msg'],
+        template: '<div>{{msg}} A custom component!</div>'
+      })
+      var app = new Vue({
+        el: '#app',
+        data () {
+          return {
+            msg1: 'msg1'
+          }
+        }
+      })
+      var app1 = new Vue({
+        el: '#app1',
+        data () {
+          return {
+            msg2: 'msg2'
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
