@@ -1,4 +1,5 @@
-import Vue from '../source/core'
+window.__WEEX__ = false
+import Vue from '../source/platforms/web/entry-runtime'
 import App from './App.vue'
 import HelloWorld from './components/HelloWorld'
 console.log(Vue)

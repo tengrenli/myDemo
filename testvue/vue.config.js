@@ -61,7 +61,8 @@ module.exports = {
       .set('@comp', path.resolve(__dirname, 'src/components'))
       .set('core', path.resolve(__dirname, 'source/core'))
       .set('shared', path.resolve(__dirname, 'source/shared'))
-      // .set('sfc', path.resolve(__dirname, 'source/sfc'))
+      .set('web', path.resolve(__dirname, 'source/platforms/web'))
+      .set('compiler', path.resolve(__dirname, 'source/compiler'))
 
     config.externals({})
   },
