@@ -3,13 +3,16 @@
 import { isRegExp, remove } from 'shared/util'
 import { getFirstComponentChild } from 'core/vdom/helpers/index'
 
-type VNodeCache = { [key: string]: ?VNode };
+type VNodeCache = { [key: string]: ?VNode }
 
 function getComponentName (opts: ?VNodeComponentOptions): ?string {
   return opts && (opts.Ctor.options.name || opts.tag)
 }
 
-function matches (pattern: string | RegExp | Array<string>, name: string): boolean {
+function matches (
+  pattern: string | RegExp | Array<string>,
+  name: string
+): boolean {
   if (Array.isArray(pattern)) {
     return pattern.indexOf(name) > -1
   } else if (typeof pattern === 'string') {
@@ -52,7 +55,7 @@ const patternTypes: Array<Function> = [String, RegExp, Array]
 
 export default {
   name: 'keep-alive',
-  abstract: true,
+  abstract: true, // 抽象组件
 
   props: {
     include: patternTypes,
@@ -83,7 +86,8 @@ export default {
   render () {
     const slot = this.$slots.default
     const vnode: VNode = getFirstComponentChild(slot)
-    const componentOptions: ?VNodeComponentOptions = vnode && vnode.componentOptions
+    const componentOptions: ?VNodeComponentOptions =
+      vnode && vnode.componentOptions
     if (componentOptions) {
       // check pattern
       const name: ?string = getComponentName(componentOptions)
@@ -98,11 +102,13 @@ export default {
       }
 
       const { cache, keys } = this
-      const key: ?string = vnode.key == null
-        // same constructor may get registered as different local components
-        // so cid alone is not enough (#3269)
-        ? componentOptions.Ctor.cid + (componentOptions.tag ? `::${componentOptions.tag}` : '')
-        : vnode.key
+      const key: ?string =
+        vnode.key == null
+          ? // same constructor may get registered as different local components
+            // so cid alone is not enough (#3269)
+            componentOptions.Ctor.cid +
+            (componentOptions.tag ? `::${componentOptions.tag}` : '')
+          : vnode.key
       if (cache[key]) {
         vnode.componentInstance = cache[key].componentInstance
         // make current key freshest

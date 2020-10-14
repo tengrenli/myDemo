@@ -22,7 +22,8 @@ export function initMixin (Vue) {
     vm._uid = uid++
 
     let startTag, endTag
-    /* istanbul ignore if */
+      /* istanbul ignore if */
+      // 性能埋点
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       startTag = `vue-perf-start:${vm._uid}`
       endTag = `vue-perf-end:${vm._uid}`
@@ -39,7 +40,7 @@ export function initMixin (Vue) {
       initInternalComponent(vm, options)
     } else {
       vm.$options = mergeOptions(
-        resolveConstructorOptions(vm.constructor),
+        resolveConstructorOptions(vm.constructor), // Vue
         options || {},
         vm
       )
@@ -61,7 +62,8 @@ export function initMixin (Vue) {
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
 
-    /* istanbul ignore if */
+  /* istanbul ignore if */
+    // 性能埋点
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       vm._name = formatComponentName(vm, false)
       mark(endTag)

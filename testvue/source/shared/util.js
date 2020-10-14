@@ -121,7 +121,7 @@ export function makeMap (
   // expectsLowerCase?: boolean
   str,
   expectsLowerCase
-// ): (key: string) => true | void {
+  // ): (key: string) => true | void {
 ) {
   const map = Object.create(null)
   // const list: Array<string> = str.split(',')
@@ -178,8 +178,11 @@ export function cached<F: Function> (fn: F): F {
  * Camelize a hyphen-delimited string.
  */
 const camelizeRE = /-(\w)/g
+// eg  'msg-a-b' => msgAB
 export const camelize = cached((str: string): string => {
-  return str.replace(camelizeRE, (_, c) => (c ? c.toUpperCase() : ''))
+  return str.replace(camelizeRE, (_, c) => {
+    return c ? c.toUpperCase() : ''
+  })
 })
 
 /**

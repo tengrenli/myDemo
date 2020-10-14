@@ -52,18 +52,26 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   }
 
   Vue.options = Object.create(null)
+  // component filter directive
   ASSET_TYPES.forEach(type => {
     Vue.options[type + 's'] = Object.create(null)
   })
 
   // this is used to identify the "base" constructor to extend all plain-object
   // components with in Weex's multi-instance scenarios.
-  Vue.options._base = Vue
 
+  // Vue.options._base
+
+  Vue.options._base = Vue
+  // Vue.options.components['KeepAlive']  挂载keep-alive 组件
   extend(Vue.options.components, builtInComponents)
 
-  initUse(Vue)
+    // Vue.use 方法
+  initUse(Vue) 
+    // 全局mixin 方法
   initMixin(Vue)
+    // * 子继承父
   initExtend(Vue)
+    // Vue 挂载component filter directive 方法
   initAssetRegisters(Vue)
 }

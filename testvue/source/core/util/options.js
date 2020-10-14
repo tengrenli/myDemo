@@ -300,6 +300,7 @@ function normalizeProps (options: Object, vm: ?Component) {
   if (!props) return
   const res = {}
   let i, val, name
+  // props 为Array
   if (Array.isArray(props)) {
     i = props.length
     while (i--) {
@@ -311,7 +312,7 @@ function normalizeProps (options: Object, vm: ?Component) {
         warn('props must be strings when using array syntax.')
       }
     }
-  } else if (isPlainObject(props)) {
+  } else if (isPlainObject(props)) { // props  为Object
     for (const key in props) {
       val = props[key]
       name = camelize(key)
