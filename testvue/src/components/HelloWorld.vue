@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1 @click="down">{{ msgAB }}</h1>
+    <p @click="count">{{ globalData.count }}</p>
     <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -36,13 +37,25 @@ export default {
   props: {
     'msg-a-b': String
   },
-  mounted () {},
+  watch: {
+    'globalData.count' (newVal, oldVal) {
+       console.log('watch cb=>', newVal, oldVal)
+    }
+  },
+  mounted () {
+    this.$watch('globalData.count', function (newVal, oldVal) {
+      console.log('$watc cb=>', newVal, oldVal)
+    })
+  },
   destroyed () {
     console.log('is destoryed')
   },
   methods: {
     down () {
       this.$destroy()
+    },
+    count () {
+      this.globalData.count++
     }
   }
 }

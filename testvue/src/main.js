@@ -18,6 +18,9 @@ Vue.component('HelloWorld', HelloWorld)
 //     console.log('333')
 //   }
 // })
+
+// 响应式属性
+Vue.prototype.globalData = Vue.observable({ count: 0 })
 var myApp = Vue.extend({
   name: 'myApp',
   render (h) {

@@ -11,6 +11,7 @@ const isSpecialTag = makeMap('script,style,template', true)
 /**
  * Parse a single-file component (*.vue) file into an SFC Descriptor Object.
  */
+
 export function parseComponent (
   content: string,
   options?: Object = {}
@@ -22,6 +23,7 @@ export function parseComponent (
     customBlocks: [],
     errors: []
   }
+  debugger
   let depth = 0
   let currentBlock: ?SFCBlock = null
 
@@ -66,7 +68,8 @@ export function parseComponent (
         } else {
           sfc[tag] = currentBlock
         }
-      } else { // custom blocks
+      } else {
+        // custom blocks
         sfc.customBlocks.push(currentBlock)
       }
     }
@@ -111,14 +114,12 @@ export function parseComponent (
     depth--
   }
 
-  function padContent (block: SFCBlock, pad: true | "line" | "space") {
+  function padContent (block: SFCBlock, pad: true | 'line' | 'space') {
     if (pad === 'space') {
       return content.slice(0, block.start).replace(replaceRE, ' ')
     } else {
       const offset = content.slice(0, block.start).split(splitRE).length
-      const padChar = block.type === 'script' && !block.lang
-        ? '//\n'
-        : '\n'
+      const padChar = block.type === 'script' && !block.lang ? '//\n' : '\n'
       return Array(offset).join(padChar)
     }
   }

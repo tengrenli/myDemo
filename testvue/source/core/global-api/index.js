@@ -46,6 +46,8 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   Vue.nextTick = nextTick
 
   // 2.6 explicit observable API
+
+  // 把对象数据变为响应式
   Vue.observable = <T>(obj: T): T => {
     observe(obj)
     return obj
@@ -66,12 +68,12 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   // Vue.options.components['KeepAlive']  挂载keep-alive 组件
   extend(Vue.options.components, builtInComponents)
 
-    // Vue.use 方法
-  initUse(Vue) 
-    // 全局mixin 方法
+  // Vue.use 方法
+  initUse(Vue)
+  // 全局mixin 方法
   initMixin(Vue)
-    // * 子继承父
+  // * 子继承父
   initExtend(Vue)
-    // Vue 挂载component filter directive 方法
+  // Vue 挂载component filter directive 方法
   initAssetRegisters(Vue)
 }
