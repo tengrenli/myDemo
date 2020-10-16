@@ -19,11 +19,10 @@ import {
 // };
 
 export function validateProp (
-  // key: string,
-  // propOptions: Object,
-  // propsData: Object,
-  // vm?: Component
-  key, propOptions, propsData, vm
+  key: string,
+  propOptions: Object,
+  propsData: Object,
+  vm?: Component
 ){
   const prop = propOptions[key]
   const absent = !hasOwn(propsData, key)

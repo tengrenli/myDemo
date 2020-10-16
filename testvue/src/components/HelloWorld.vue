@@ -31,20 +31,25 @@
 </template>
 
 <script>
-// import Vue from 'web/entry-runtime'
+import Vue from 'web/entry-runtime'
 export default {
   // name: 'HelloWorld',
   props: {
     'msg-a-b': String
   },
   watch: {
-    'globalData.count' (newVal, oldVal) {
-       console.log('watch cb=>', newVal, oldVal)
-    }
+    // 'globalData.count' (newVal, oldVal) {
+    //    console.log('watch cb=>', newVal, oldVal)
+    // }
+  },
+  created () {
+    this.globalData = this.$options._base.observable({ count: 0 })
   },
   mounted () {
-    console.log(this.$observable)
+    console.log(this.$options._base.observable)
     console.log(this)
+
+    console.log(this.globalData)
     this.$watch('globalData.count', function (newVal, oldVal) {
       console.log('$watc cb=>', newVal, oldVal)
     })

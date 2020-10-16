@@ -21,7 +21,7 @@ Vue.component('HelloWorld', HelloWorld)
 // })
 
 // 响应式属性
-Vue.prototype.globalData = Vue.observable({ count: 0 })
+// Vue.prototype.globalData = Vue.observable({ count: 0 })
 // var myApp = Vue.extend({
 //   name: 'myApp',
 //   template: '<p v-pre v-a><b> s <b>aaa</b>s s </b></p>'
