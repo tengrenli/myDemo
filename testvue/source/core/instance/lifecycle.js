@@ -34,6 +34,7 @@ export function initLifecycle (vm: Component) {
 
   // locate first non-abstract parent
   let parent = options.parent
+  // 非抽象组件
   if (parent && !options.abstract) {
     while (parent.$options.abstract && parent.$parent) {
       parent = parent.$parent
@@ -41,7 +42,7 @@ export function initLifecycle (vm: Component) {
     parent.$children.push(vm)
   }
 
-  vm.$parent = parent
+  vm.$parent = parent // 父组件为非抽象组件
   vm.$root = parent ? parent.$root : vm
 
   vm.$children = []
@@ -354,7 +355,7 @@ export function callHook (vm: Component, hook: string) {
       invokeWithErrorHandling(handlers[i], vm, null, vm, info)
     }
   }
-  if (vm._hasHookEvent) {
+  if (vm._hasHookEvent) { // 是否存在hook 监听
     vm.$emit('hook:' + hook)
   }
   popTarget()

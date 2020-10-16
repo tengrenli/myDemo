@@ -17,23 +17,26 @@ type TextParseResult = {
   tokens: Array<string | { '@binding': string }>
 }
 
+// TODO 纯文本解析 待深入
 export function parseText (
   text: string,
   delimiters?: [string, string]
 ): TextParseResult | void {
+  debugger
   const tagRE = delimiters ? buildRegex(delimiters) : defaultTagRE
   if (!tagRE.test(text)) {
+    // 只到了这里
     return
   }
   const tokens = []
   const rawTokens = []
-  let lastIndex = tagRE.lastIndex = 0
+  let lastIndex = (tagRE.lastIndex = 0)
   let match, index, tokenValue
   while ((match = tagRE.exec(text))) {
     index = match.index
     // push text token
     if (index > lastIndex) {
-      rawTokens.push(tokenValue = text.slice(lastIndex, index))
+      rawTokens.push((tokenValue = text.slice(lastIndex, index)))
       tokens.push(JSON.stringify(tokenValue))
     }
     // tag token
@@ -43,7 +46,7 @@ export function parseText (
     lastIndex = index + match[0].length
   }
   if (lastIndex < text.length) {
-    rawTokens.push(tokenValue = text.slice(lastIndex))
+    rawTokens.push((tokenValue = text.slice(lastIndex)))
     tokens.push(JSON.stringify(tokenValue))
   }
   return {

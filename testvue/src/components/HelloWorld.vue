@@ -43,6 +43,8 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$observable)
+    console.log(this)
     this.$watch('globalData.count', function (newVal, oldVal) {
       console.log('$watc cb=>', newVal, oldVal)
     })

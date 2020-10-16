@@ -6,10 +6,7 @@ import { set } from '../observer/index'
 import { unicodeRegExp } from './lang'
 import { nativeWatch, hasSymbol } from './env'
 
-import {
-  ASSET_TYPES,
-  LIFECYCLE_HOOKS
-} from 'shared/constants'
+import { ASSET_TYPES, LIFECYCLE_HOOKS } from 'shared/constants'
 
 import {
   extend,
@@ -36,7 +33,7 @@ if (process.env.NODE_ENV !== 'production') {
     if (!vm) {
       warn(
         `option "${key}" can only be used during instance ` +
-        'creation with the `new` keyword.'
+          'creation with the `new` keyword.'
       )
     }
     return defaultStrat(parent, child)
@@ -50,9 +47,7 @@ function mergeData (to: Object, from: ?Object): Object {
   if (!from) return to
   let key, toVal, fromVal
 
-  const keys = hasSymbol
-    ? Reflect.ownKeys(from)
-    : Object.keys(from)
+  const keys = hasSymbol ? Reflect.ownKeys(from) : Object.keys(from)
 
   for (let i = 0; i < keys.length; i++) {
     key = keys[i]
@@ -103,12 +98,10 @@ export function mergeDataOrFn (
   } else {
     return function mergedInstanceDataFn () {
       // instance merge
-      const instanceData = typeof childVal === 'function'
-        ? childVal.call(vm, vm)
-        : childVal
-      const defaultData = typeof parentVal === 'function'
-        ? parentVal.call(vm, vm)
-        : parentVal
+      const instanceData =
+        typeof childVal === 'function' ? childVal.call(vm, vm) : childVal
+      const defaultData =
+        typeof parentVal === 'function' ? parentVal.call(vm, vm) : parentVal
       if (instanceData) {
         return mergeData(instanceData, defaultData)
       } else {
@@ -125,12 +118,13 @@ strats.data = function (
 ): ?Function {
   if (!vm) {
     if (childVal && typeof childVal !== 'function') {
-      process.env.NODE_ENV !== 'production' && warn(
-        'The "data" option should be a function ' +
-        'that returns a per-instance value in component ' +
-        'definitions.',
-        vm
-      )
+      process.env.NODE_ENV !== 'production' &&
+        warn(
+          'The "data" option should be a function ' +
+            'that returns a per-instance value in component ' +
+            'definitions.',
+          vm
+        )
 
       return parentVal
     }
@@ -151,12 +145,10 @@ function mergeHook (
     ? parentVal
       ? parentVal.concat(childVal)
       : Array.isArray(childVal)
-        ? childVal
-        : [childVal]
+      ? childVal
+      : [childVal]
     : parentVal
-  return res
-    ? dedupeHooks(res)
-    : res
+  return res ? dedupeHooks(res) : res
 }
 
 function dedupeHooks (hooks) {
@@ -230,7 +222,9 @@ strats.watch = function (
     }
     ret[key] = parent
       ? parent.concat(child)
-      : Array.isArray(child) ? child : [child]
+      : Array.isArray(child)
+      ? child
+      : [child]
   }
   return ret
 }
@@ -238,10 +232,7 @@ strats.watch = function (
 /**
  * Other object hashes.
  */
-strats.props =
-strats.methods =
-strats.inject =
-strats.computed = function (
+strats.props = strats.methods = strats.inject = strats.computed = function (
   parentVal: ?Object,
   childVal: ?Object,
   vm?: Component,
@@ -262,9 +253,7 @@ strats.provide = mergeDataOrFn
  * Default strategy.
  */
 const defaultStrat = function (parentVal: any, childVal: any): any {
-  return childVal === undefined
-    ? parentVal
-    : childVal
+  return childVal === undefined ? parentVal : childVal
 }
 
 /**
@@ -277,16 +266,21 @@ function checkComponents (options: Object) {
 }
 
 export function validateComponentName (name: string) {
-  if (!new RegExp(`^[a-zA-Z][\\-\\.0-9_${unicodeRegExp.source}]*$`).test(name)) {
+  if (
+    !new RegExp(`^[a-zA-Z][\\-\\.0-9_${unicodeRegExp.source}]*$`).test(name)
+  ) {
     warn(
-      'Invalid component name: "' + name + '". Component names ' +
-      'should conform to valid custom element name in html5 specification.'
+      'Invalid component name: "' +
+        name +
+        '". Component names ' +
+        'should conform to valid custom element name in html5 specification.'
     )
   }
   if (isBuiltInTag(name) || config.isReservedTag(name)) {
     warn(
       'Do not use built-in or reserved HTML elements as component ' +
-      'id: ' + name
+        'id: ' +
+        name
     )
   }
 }
@@ -312,18 +306,17 @@ function normalizeProps (options: Object, vm: ?Component) {
         warn('props must be strings when using array syntax.')
       }
     }
-  } else if (isPlainObject(props)) { // props  为Object
+  } else if (isPlainObject(props)) {
+    // props  为Object
     for (const key in props) {
       val = props[key]
       name = camelize(key)
-      res[name] = isPlainObject(val)
-        ? val
-        : { type: val }
+      res[name] = isPlainObject(val) ? val : { type: val }
     }
   } else if (process.env.NODE_ENV !== 'production') {
     warn(
       `Invalid value for option "props": expected an Array or an Object, ` +
-      `but got ${toRawType(props)}.`,
+        `but got ${toRawType(props)}.`,
       vm
     )
   }
@@ -336,7 +329,7 @@ function normalizeProps (options: Object, vm: ?Component) {
 function normalizeInject (options: Object, vm: ?Component) {
   const inject = options.inject
   if (!inject) return
-  const normalized = options.inject = {}
+  const normalized = (options.inject = {})
   if (Array.isArray(inject)) {
     for (let i = 0; i < inject.length; i++) {
       normalized[inject[i]] = { from: inject[i] }
@@ -351,7 +344,7 @@ function normalizeInject (options: Object, vm: ?Component) {
   } else if (process.env.NODE_ENV !== 'production') {
     warn(
       `Invalid value for option "inject": expected an Array or an Object, ` +
-      `but got ${toRawType(inject)}.`,
+        `but got ${toRawType(inject)}.`,
       vm
     )
   }
@@ -376,7 +369,7 @@ function assertObjectType (name: string, value: any, vm: ?Component) {
   if (!isPlainObject(value)) {
     warn(
       `Invalid value for option "${name}": expected an Object, ` +
-      `but got ${toRawType(value)}.`,
+        `but got ${toRawType(value)}.`,
       vm
     )
   }
@@ -460,10 +453,7 @@ export function resolveAsset (
   // fallback to prototype chain
   const res = assets[id] || assets[camelizedId] || assets[PascalCaseId]
   if (process.env.NODE_ENV !== 'production' && warnMissing && !res) {
-    warn(
-      'Failed to resolve ' + type.slice(0, -1) + ': ' + id,
-      options
-    )
+    warn('Failed to resolve ' + type.slice(0, -1) + ': ' + id, options)
   }
   return res
 }

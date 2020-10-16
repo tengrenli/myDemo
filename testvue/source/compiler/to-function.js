@@ -52,6 +52,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
     const key = options.delimiters
       ? String(options.delimiters) + template
       : template
+    
     if (cache[key]) {
       return cache[key]
     }

@@ -2,7 +2,7 @@
 
 import { cached, extend, toObject } from 'shared/util'
 
-export const parseStyleText = cached(function (cssText) {
+export const parseStyleText: any = cached(function (cssText) {
   const res = {}
   const listDelimiter = /;(?![^(]*\))/g
   const propertyDelimiter = /:(.+)/

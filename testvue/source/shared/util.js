@@ -4,8 +4,7 @@ export const emptyObject = Object.freeze({})
 
 // These helpers produce better VM code in JS engines due to their
 // explicitness and function inlining.
-// export function isUndef (v: any): boolean %checks {
-export function isUndef (v) {
+export function isUndef (v: any): boolean %checks {
   return v === undefined || v === null
 }
 
@@ -75,14 +74,12 @@ export function isRegExp (v) {
 /**
  * Check if val is a valid array index.
  */
-// export function isValidArrayIndex (val: any): boolean {
-export function isValidArrayIndex (val) {
+export function isValidArrayIndex (val: any): boolean {
   const n = parseFloat(String(val))
   return n >= 0 && Math.floor(n) === n && isFinite(val)
 }
 
-// export function isPromise (val: any): boolean {
-export function isPromise (val) {
+export function isPromise (val: any): boolean {
   return (
     isDef(val) &&
     typeof val.then === 'function' &&
@@ -93,8 +90,7 @@ export function isPromise (val) {
 /**
  * Convert a value to a string that is actually rendered.
  */
-// export function toString (val: any): string {
-export function toString (val) {
+export function toString (val: any): string {
   return val == null
     ? ''
     : Array.isArray(val) || (isPlainObject(val) && val.toString === _toString)
@@ -106,8 +102,7 @@ export function toString (val) {
  * Convert an input value to a number for persistence.
  * If the conversion fails, return original string.
  */
-// export function toNumber (val: string): number | string {
-export function toNumber (val) {
+export function toNumber (val: string): number | string {
   const n = parseFloat(val)
   return isNaN(n) ? val : n
 }
@@ -117,15 +112,11 @@ export function toNumber (val) {
  * is in that map.
  */
 export function makeMap (
-  // str: string,
-  // expectsLowerCase?: boolean
-  str,
-  expectsLowerCase
-  // ): (key: string) => true | void {
-) {
+  str: string,
+  expectsLowerCase?: boolean
+): (key: string) => true | void {
   const map = Object.create(null)
-  // const list: Array<string> = str.split(',')
-  const list = str.split(',')
+  const list: Array<string> = str.split(',')
   for (let i = 0; i < list.length; i++) {
     map[list[i]] = true
   }
@@ -164,7 +155,7 @@ export function hasOwn (obj: Object | Array<*>, key: string): boolean {
 }
 
 /**
- * Create a cached version of a pure function.
+ * Create a cached version of a pure function.  // TODO 缓存数据方法 学习
  */
 export function cached<F: Function> (fn: F): F {
   const cache = Object.create(null)
@@ -289,6 +280,7 @@ export const identity = (_: any) => _
 /**
  * Generate a string containing static keys from compiler modules.
  */
+// TODO 
 export function genStaticKeys (modules: Array<ModuleOptions>): string {
   return modules
     .reduce((keys, m) => {

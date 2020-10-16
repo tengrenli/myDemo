@@ -16,14 +16,14 @@ let uid = 0
 export function initMixin (Vue) {
   // Vue.prototype._init = function (options?: Object) {
   Vue.prototype._init = function (options) {
-    // const vm: Component = this
-    const vm  = this
+    
+    const vm: Component = this
     // a uid
     vm._uid = uid++
 
     let startTag, endTag
-      /* istanbul ignore if */
-      // 性能埋点
+    /* istanbul ignore if */
+    // 性能埋点
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       startTag = `vue-perf-start:${vm._uid}`
       endTag = `vue-perf-end:${vm._uid}`
@@ -33,12 +33,14 @@ export function initMixin (Vue) {
     // a flag to avoid this being observed
     vm._isVue = true
     // merge options
+    // 创建
     if (options && options._isComponent) {
       // optimize internal component instantiation
       // since dynamic options merging is pretty slow, and none of the
       // internal component options needs special treatment.
       initInternalComponent(vm, options)
     } else {
+      // 合并options
       vm.$options = mergeOptions(
         resolveConstructorOptions(vm.constructor), // Vue
         options || {},
@@ -53,16 +55,26 @@ export function initMixin (Vue) {
     }
     // expose real self
     vm._self = vm
+    // 初始化 父子关系变量  及 标记变量
+    // $parents/$root/$children/$refs/_watcher
+    // _inactive / _directInactive = false / _isMounted = false / _isDestroyed = false / _isBeingDestroyed = false
     initLifecycle(vm)
+    // 初始化 vm._events / vm._hasHookEvent = false /  updateComponentListeners
     initEvents(vm)
+    // _staticTrees/_vnode/$slots/$scopedSlots/$createElement/_c /  defineReactive => $attrs / $listeners
     initRender(vm)
     callHook(vm, 'beforeCreate')
+    // 有关inject 相关配置 // TODO
     initInjections(vm) // resolve injections before data/props
+    // vm._watchers = []
+    // initProps(vm, vm.$options.props)/ initMethods(vm, vm.$options.methods) 
+    // initData(vm) / initComputed(vm, vm.$options.computed) / initWatch(vm, vm.$options.watch)
     initState(vm)
+    // vm._provided // TODO
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
 
-  /* istanbul ignore if */
+    /* istanbul ignore if */
     // 性能埋点
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       vm._name = formatComponentName(vm, false)
@@ -76,9 +88,11 @@ export function initMixin (Vue) {
   }
 }
 
-// export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
-export function initInternalComponent (vm, options) {
-  const opts = vm.$options = Object.create(vm.constructor.options)
+export function initInternalComponent (
+  vm: Component,
+  options: InternalComponentOptions
+) {
+  const opts = (vm.$options = Object.create(vm.constructor.options))
   // doing this because it's faster than dynamic enumeration.
   const parentVnode = options._parentVnode
   opts.parent = options.parent
@@ -96,8 +110,7 @@ export function initInternalComponent (vm, options) {
   }
 }
 
-// export function resolveConstructorOptions (Ctor: Class<Component>) {
-export function resolveConstructorOptions (Ctor) {
+export function resolveConstructorOptions (Ctor: Class<Component>) {
   let options = Ctor.options
   if (Ctor.super) {
     const superOptions = resolveConstructorOptions(Ctor.super)
@@ -121,8 +134,7 @@ export function resolveConstructorOptions (Ctor) {
   return options
 }
 
-// function resolveModifiedOptions (Ctor: Class<Component>): ?Object {
-function resolveModifiedOptions (Ctor) {
+function resolveModifiedOptions (Ctor: Class<Component>): ?Object {
   let modified
   const latest = Ctor.options
   const sealed = Ctor.sealedOptions

@@ -4,7 +4,7 @@ import { parseText } from 'compiler/parser/text-parser'
 import {
   getAndRemoveAttr,
   getBindingAttr,
-  baseWarn
+  baseWarn // 编译错误警告方法 封装
 } from 'compiler/helpers'
 
 function transformNode (el: ASTElement, options: CompilerOptions) {
@@ -15,9 +15,9 @@ function transformNode (el: ASTElement, options: CompilerOptions) {
     if (res) {
       warn(
         `class="${staticClass}": ` +
-        'Interpolation inside attributes has been removed. ' +
-        'Use v-bind or the colon shorthand instead. For example, ' +
-        'instead of <div class="{{ val }}">, use <div :class="val">.',
+          'Interpolation inside attributes has been removed. ' +
+          'Use v-bind or the colon shorthand instead. For example, ' +
+          'instead of <div class="{{ val }}">, use <div :class="val">.',
         el.rawAttrsMap['class']
       )
     }

@@ -8,7 +8,7 @@ export const namespaceMap = {
   math: 'http://www.w3.org/1998/Math/MathML'
 }
 
-export const isHTMLTag = makeMap(
+export const isHTMLTag: any = makeMap(
   'html,body,base,head,link,meta,style,title,' +
   'address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,' +
   'div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,' +
@@ -24,7 +24,7 @@ export const isHTMLTag = makeMap(
 
 // this map is intentionally selective, only covering SVG elements that may
 // contain child elements.
-export const isSVG = makeMap(
+export const isSVG: any = makeMap(
   'svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,' +
   'foreignObject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,' +
   'polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view',
@@ -74,4 +74,4 @@ export function isUnknownElement (tag: string): boolean {
   }
 }
 
-export const isTextInputType = makeMap('text,number,password,search,email,tel,url')
+export const isTextInputType: any = makeMap('text,number,password,search,email,tel,url')
