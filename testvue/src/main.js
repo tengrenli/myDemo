@@ -36,7 +36,13 @@ window.__vue__ = Vue
 window.myVue = new Vue({
   el: '#app',
   render: h => h(App),
-  beforeCreate() {
+  data () {
+    return {
+      message: 'hello world'
+    }
+  },
+  // render: h => h(App),
+  beforeCreate () {
     console.log('app beforeCreate')
   },
   mounted () {

@@ -24,23 +24,23 @@ let uid = 0
  * This is used for both the $watch() api and directives.
  */
 export default class Watcher {
-  vm: Component;
-  expression: string;
-  cb: Function;
-  id: number;
-  deep: boolean;
-  user: boolean;
-  lazy: boolean;
-  sync: boolean;
-  dirty: boolean;
-  active: boolean;
-  deps: Array<Dep>;
-  newDeps: Array<Dep>;
-  depIds: SimpleSet;
-  newDepIds: SimpleSet;
-  before: ?Function;
-  getter: Function;
-  value: any;
+  vm: Component
+  expression: string
+  cb: Function
+  id: number
+  deep: boolean
+  user: boolean
+  lazy: boolean
+  sync: boolean
+  dirty: boolean
+  active: boolean
+  deps: Array<Dep>
+  newDeps: Array<Dep>
+  depIds: SimpleSet
+  newDepIds: SimpleSet
+  before: ?Function
+  getter: Function
+  value: any
 
   constructor (
     vm: Component,
@@ -51,6 +51,7 @@ export default class Watcher {
   ) {
     this.vm = vm
     if (isRenderWatcher) {
+      // 渲染watcher ?
       vm._watcher = this
     }
     vm._watchers.push(this)
@@ -72,9 +73,8 @@ export default class Watcher {
     this.newDeps = []
     this.depIds = new Set()
     this.newDepIds = new Set()
-    this.expression = process.env.NODE_ENV !== 'production'
-      ? expOrFn.toString()
-      : ''
+    this.expression =
+      process.env.NODE_ENV !== 'production' ? expOrFn.toString() : ''
     // parse expression for getter
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn
@@ -82,17 +82,16 @@ export default class Watcher {
       this.getter = parsePath(expOrFn)
       if (!this.getter) {
         this.getter = noop
-        process.env.NODE_ENV !== 'production' && warn(
-          `Failed watching path: "${expOrFn}" ` +
-          'Watcher only accepts simple dot-delimited paths. ' +
-          'For full control, use a function instead.',
-          vm
-        )
+        process.env.NODE_ENV !== 'production' &&
+          warn(
+            `Failed watching path: "${expOrFn}" ` +
+              'Watcher only accepts simple dot-delimited paths. ' +
+              'For full control, use a function instead.',
+            vm
+          )
       }
     }
-    this.value = this.lazy
-      ? undefined
-      : this.get()
+    this.value = this.lazy ? undefined : this.get()
   }
 
   /**

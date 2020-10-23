@@ -22,7 +22,6 @@ export function parseText (
   text: string,
   delimiters?: [string, string]
 ): TextParseResult | void {
-  debugger
   const tagRE = delimiters ? buildRegex(delimiters) : defaultTagRE
   if (!tagRE.test(text)) {
     // 只到了这里

@@ -42,7 +42,15 @@ export default {
     //    console.log('watch cb=>', newVal, oldVal)
     // }
   },
+  data () {
+    return {
+      testData: 2
+    }
+  },
   created () {
+    console.log('$data', this.$data)
+    console.log('$props', this.$props)
+    console.log('33333', this._data.testData)
     this.globalData = this.$options._base.observable({ count: 0 })
   },
   mounted () {

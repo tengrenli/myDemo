@@ -12,10 +12,10 @@ function Vue (options) {
   this._init(options)
 }
 
-initMixin(Vue)
-stateMixin(Vue)
-eventsMixin(Vue)
-lifecycleMixin(Vue)
-renderMixin(Vue)
+initMixin(Vue) // Vue.prototype._init
+stateMixin(Vue) // Vue.prototype.$data / $props / $set / $delete / $watch
+eventsMixin(Vue) // Vue.prototype.$on / $off / $emit / $once
+lifecycleMixin(Vue) // Vue.prototype._update / $forceUpdate / $destroy
+renderMixin(Vue) // Vue.prototype._render / $nextTick
 
 export default Vue

@@ -65,6 +65,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
     vm._vnode = vnode
     // Vue.prototype.__patch__ is injected in entry points
     // based on the rendering backend used.
+    // TODO  mark 通过__patch__ 生成真实dom
     if (!prevVnode) {
       // initial render
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
@@ -72,6 +73,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
       // updates
       vm.$el = vm.__patch__(prevVnode, vnode)
     }
+    console.log('vm.$el===>', vm.$el)
     restoreActiveInstance()
     // update __vue__ reference
     if (prevEl) {
@@ -145,7 +147,7 @@ export function mountComponent (
   el: ?Element,
   hydrating?: boolean
 ): Component {
-  vm.$el = el
+  vm.$el = el // 缓存
   if (!vm.$options.render) {
     vm.$options.render = createEmptyVNode
     if (process.env.NODE_ENV !== 'production') {
@@ -199,18 +201,20 @@ export function mountComponent (
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
+  // 自定义watcher / 渲染watcher
   new Watcher(
     vm,
     updateComponent,
     noop,
     {
       before () {
+        // TODO
         if (vm._isMounted && !vm._isDestroyed) {
           callHook(vm, 'beforeUpdate')
         }
       }
     },
-    true /* isRenderWatcher */
+    true /* isRenderWatcher */ // TODO mark 渲染watcher
   )
   hydrating = false
 
@@ -355,7 +359,8 @@ export function callHook (vm: Component, hook: string) {
       invokeWithErrorHandling(handlers[i], vm, null, vm, info)
     }
   }
-  if (vm._hasHookEvent) { // 是否存在hook 监听
+  if (vm._hasHookEvent) {
+    // 是否存在hook 监听
     vm.$emit('hook:' + hook)
   }
   popTarget()

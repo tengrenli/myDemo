@@ -8,6 +8,11 @@
 
 export default {
   name: 'App',
+  computed: {
+    myComputed () {
+      return true
+    }
+  }
 }
 </script>
 

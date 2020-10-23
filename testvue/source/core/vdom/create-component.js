@@ -5,13 +5,7 @@ import { resolveConstructorOptions } from 'core/instance/init'
 import { queueActivatedComponent } from 'core/observer/scheduler'
 import { createFunctionalComponent } from './create-functional-component'
 
-import {
-  warn,
-  isDef,
-  isUndef,
-  isTrue,
-  isObject
-} from '../util/index'
+import { warn, isDef, isUndef, isTrue, isObject } from '../util/index'
 
 import {
   resolveAsyncComponent,
@@ -30,7 +24,7 @@ import {
 import {
   isRecyclableComponent,
   renderRecyclableComponentTemplate
-// } from 'weex/runtime/recycle-list/render-component-template'
+  // } from 'weex/runtime/recycle-list/render-component-template'
 } from '../../platforms/weex/runtime/recycle-list/render-component-template'
 
 // inline hooks to be invoked on component VNodes during patch
@@ -45,17 +39,17 @@ const componentVNodeHooks = {
       const mountedNode: any = vnode // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode)
     } else {
-      const child = vnode.componentInstance = createComponentInstanceForVnode(
+      const child = (vnode.componentInstance = createComponentInstanceForVnode(
         vnode,
         activeInstance
-      )
+      ))
       child.$mount(hydrating ? vnode.elm : undefined, hydrating)
     }
   },
 
   prepatch (oldVnode: MountedComponentVNode, vnode: MountedComponentVNode) {
     const options = vnode.componentOptions
-    const child = vnode.componentInstance = oldVnode.componentInstance
+    const child = (vnode.componentInstance = oldVnode.componentInstance)
     updateChildComponent(
       child,
       options.propsData, // updated props
@@ -109,7 +103,7 @@ export function createComponent (
   if (isUndef(Ctor)) {
     return
   }
-
+  debugger
   const baseCtor = context.$options._base
 
   // plain options object: turn it into a constructor
@@ -135,13 +129,7 @@ export function createComponent (
       // return a placeholder node for async component, which is rendered
       // as a comment node but preserves all the raw information for the node.
       // the information will be used for async server-rendering and hydration.
-      return createAsyncPlaceholder(
-        asyncFactory,
-        data,
-        context,
-        children,
-        tag
-      )
+      return createAsyncPlaceholder(asyncFactory, data, context, children, tag)
     }
   }
 
@@ -190,7 +178,11 @@ export function createComponent (
   const name = Ctor.options.name || tag
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
-    data, undefined, undefined, undefined, context,
+    data,
+    undefined,
+    undefined,
+    undefined,
+    context,
     { Ctor, propsData, listeners, tag, children },
     asyncFactory
   )
@@ -208,7 +200,7 @@ export function createComponent (
 
 export function createComponentInstanceForVnode (
   vnode: any, // we know it's MountedComponentVNode but flow doesn't
-  parent: any, // activeInstance in lifecycle state
+  parent: any // activeInstance in lifecycle state
 ): Component {
   const options: InternalComponentOptions = {
     _isComponent: true,

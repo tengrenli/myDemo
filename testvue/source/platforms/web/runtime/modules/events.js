@@ -3,7 +3,10 @@
 import { isDef, isUndef } from 'shared/util'
 import { updateListeners } from 'core/vdom/helpers/index'
 import { isIE, isFF, supportsPassive, isUsingMicroTask } from 'core/util/index'
-import { RANGE_TOKEN, CHECKBOX_RADIO_TOKEN } from 'web/compiler/directives/model'
+import {
+  RANGE_TOKEN,
+  CHECKBOX_RADIO_TOKEN
+} from 'web/compiler/directives/model'
 import { currentFlushTimestamp } from 'core/observer/scheduler'
 
 // normalize v-model event tokens that can only be determined at runtime.
@@ -83,9 +86,7 @@ function add (
   target.addEventListener(
     name,
     handler,
-    supportsPassive
-      ? { capture, passive }
-      : capture
+    supportsPassive ? { capture, passive } : capture
   )
 }
 
@@ -95,7 +96,7 @@ function remove (
   capture: boolean,
   _target?: HTMLElement
 ) {
-  (_target || target).removeEventListener(
+  ;(_target || target).removeEventListener(
     name,
     handler._wrapper || handler,
     capture
