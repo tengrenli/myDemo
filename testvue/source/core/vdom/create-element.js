@@ -30,6 +30,7 @@ export function createElement (
   normalizationType: any,
   alwaysNormalize: boolean
 ): VNode | Array<VNode> {
+  debugger
   if (Array.isArray(data) || isPrimitive(data)) {
     normalizationType = children
     children = data
@@ -42,9 +43,9 @@ export function createElement (
 }
 
 export function _createElement (
-  context: Component,
-  tag?: string | Class<Component> | Function | Object,
-  data?: VNodeData,
+  context: Component, // vm 实例
+  tag?: string | Class<Component> | Function | Object, // app  组件
+  data?: VNodeData, //  app 时 此参数为undefined
   children?: any,
   normalizationType?: number
 ): VNode | Array<VNode> {
@@ -52,7 +53,9 @@ export function _createElement (
   if (isDef(data) && isDef((data: any).__ob__)) {
     process.env.NODE_ENV !== 'production' &&
       warn(
-        `Avoid using observed data object as vnode data: ${ JSON.stringify( data ) }` + 'Always create fresh vnode data objects in each render!',
+        `Avoid using observed data object as vnode data: ${JSON.stringify(
+          data
+        )}` + 'Always create fresh vnode data objects in each render!',
         context
       )
     return createEmptyVNode()
@@ -88,18 +91,23 @@ export function _createElement (
   }
   // 对所有children normalize
   if (normalizationType === ALWAYS_NORMALIZE) {
+    // 第一次 app 为true
     children = normalizeChildren(children)
   } else if (normalizationType === SIMPLE_NORMALIZE) {
     children = simpleNormalizeChildren(children)
   }
   let vnode, ns
+
+  // tag 为字符串
   if (typeof tag === 'string') {
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
     if (config.isReservedTag(tag)) {
       // platform built-in elements
       if (
-        process.env.NODE_ENV !== 'production' && isDef(data) &&isDef(data.nativeOn)
+        process.env.NODE_ENV !== 'production' &&
+        isDef(data) &&
+        isDef(data.nativeOn)
       ) {
         warn(
           `The .native modifier for v-on is only valid on components but it was used on <${tag}>.`,
@@ -127,17 +135,21 @@ export function _createElement (
       vnode = new VNode(tag, data, children, undefined, undefined, context)
     }
   } else {
-    // 组件
+    // 第一次 app  会进入
     // direct component options / constructor
     vnode = createComponent(tag, data, context, children)
   }
+  // vnode 为 Array  直接返回
   if (Array.isArray(vnode)) {
     return vnode
   } else if (isDef(vnode)) {
+    // 命名空间处理
     if (isDef(ns)) applyNS(vnode, ns)
+    // 处理 :class 、:style
     if (isDef(data)) registerDeepBindings(data)
     return vnode
   } else {
+    // 返回注释节点
     return createEmptyVNode()
   }
 }

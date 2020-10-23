@@ -91,10 +91,7 @@ export function renderMixin (Vue: Class<Component>) {
       // when parent component is patched.
       console.log('render---',render)
       currentRenderingInstance = vm
-      vnode = render.
-      
-      
-      (vm._renderProxy, vm.$createElement)
+      vnode = render.call(vm._renderProxy, vm.$createElement)
       console.log('vNode-=', vnode)
     } catch (e) {
       handleError(e, vm, `render`)

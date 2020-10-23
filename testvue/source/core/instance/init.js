@@ -18,6 +18,8 @@ export function initMixin (Vue) {
   Vue.prototype._init = function (options) {
     
     const vm: Component = this
+    console.log('this==>', this)
+    console.log(this instanceof Vue)
     // a uid
     vm._uid = uid++
 

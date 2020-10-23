@@ -94,16 +94,17 @@ const componentVNodeHooks = {
 const hooksToMerge = Object.keys(componentVNodeHooks)
 
 export function createComponent (
-  Ctor: Class<Component> | Function | Object | void,
-  data: ?VNodeData,
-  context: Component,
-  children: ?Array<VNode>,
-  tag?: string
+  Ctor: Class<Component> | Function | Object | void, // 第一次进入 为app组件
+  data: ?VNodeData, // 第一次 undefined
+  context: Component, // Vue 实例
+  children: ?Array<VNode>, // 第一次 undefined
+  tag?: string // 第一次 undefined
 ): VNode | Array<VNode> | void {
   if (isUndef(Ctor)) {
     return
   }
-  debugger
+
+  // 大 Vue 构造函数
   const baseCtor = context.$options._base
 
   // plain options object: turn it into a constructor
@@ -120,7 +121,7 @@ export function createComponent (
     return
   }
 
-  // async component
+  // async component  异步组件 // TODO 待分析
   let asyncFactory
   if (isUndef(Ctor.cid)) {
     asyncFactory = Ctor
@@ -140,6 +141,7 @@ export function createComponent (
   resolveConstructorOptions(Ctor)
 
   // transform component v-model data into props & events
+  // v-model // TODO
   if (isDef(data.model)) {
     transformModel(Ctor.options, data)
   }
@@ -147,7 +149,7 @@ export function createComponent (
   // extract props
   const propsData = extractPropsFromVNodeData(data, Ctor, tag)
 
-  // functional component
+  // functional component  函数组件 // TODO 
   if (isTrue(Ctor.options.functional)) {
     return createFunctionalComponent(Ctor, propsData, data, context, children)
   }
@@ -159,6 +161,7 @@ export function createComponent (
   // so it gets processed during parent component patch.
   data.on = data.nativeOn
 
+  // TODO 抽象组件
   if (isTrue(Ctor.options.abstract)) {
     // abstract components do not keep anything
     // other than props & listeners & slot
@@ -172,6 +175,8 @@ export function createComponent (
   }
 
   // install component management hooks onto the placeholder node
+  // 挂载组件钩子方法
+  debugger
   installComponentHooks(data)
 
   // return a placeholder vnode

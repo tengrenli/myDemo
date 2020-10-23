@@ -117,17 +117,24 @@ export function createPatchFunction (backend) {
   }
 
   let creatingElmInVPre = 0
-
+  // vnode, // app 组件 Vnode
+  // insertedVnodeQueue, // = []
+  // extremely rare edge case: do not insert if old element is in a
+  // // leaving transition. Only happens when combining transition +
+  // // keep-alive + HOCs. (#4590)
+  // oldElm._leaveCb ? null : parentElm,
+  // nodeOps.nextSibling(oldElm)
   function createElm (
-    vnode,
-    insertedVnodeQueue,
-    parentElm,
-    refElm,
+    vnode, // app 组件Vnode
+    insertedVnodeQueue, // = []
+    parentElm, // body
+    refElm, // 参照节点
     nested,
     ownerArray,
     index
   ) {
     if (isDef(vnode.elm) && isDef(ownerArray)) {
+      // 第一次 不会进入
       // This vnode was used in a previous render!
       // now it's used as a new node, overwriting its elm would cause
       // potential patch errors down the road when it's used as an insertion
@@ -135,7 +142,7 @@ export function createPatchFunction (backend) {
       // associated DOM element for it.
       vnode = ownerArray[index] = cloneVNode(vnode)
     }
-
+    // 为true
     vnode.isRootInsert = !nested // for transition enter check
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
       return
@@ -208,8 +215,11 @@ export function createPatchFunction (backend) {
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     let i = vnode.data
     if (isDef(i)) {
+      // false
       const isReactivated = isDef(vnode.componentInstance) && i.keepAlive
       if (isDef((i = i.hook)) && isDef((i = i.init))) {
+        // 此hook 插入的时间为 vdom/create-component.js installComponentHooks(data)    执行render => _createElement => vdom/create-component.js => createComponent
+        // 执行hook init
         i(vnode, false /* hydrating */)
       }
       // after calling the init hook, if the vnode is a child component
@@ -821,6 +831,8 @@ export function createPatchFunction (backend) {
   }
 
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
+    // 第一次 vm.$el = vm.__patch__(vm.$el, vnode = app 组件 Vnode 节点, hydrating = undefined, false /* removeOnly */)
+    debugger
     // 新节点不存在，只存在老节点  调用destroy 生命周期
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
@@ -835,20 +847,26 @@ export function createPatchFunction (backend) {
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue)
     } else {
+      // 第一次会进入
+      // 真实节点 #app
       const isRealElement = isDef(oldVnode.nodeType)
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
         patchVnode(oldVnode, vnode, insertedVnodeQueue, null, null, removeOnly)
       } else {
+        // 第一次进入
         if (isRealElement) {
           // mounting to a real element
           // check if this is server-rendered content and if we can perform
           // a successful hydration.
+          // nodeType = 1 为元素节点   SSR_ATTR = 'data-server-rendered'
           if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
+            // 第一次false 没有进入
             oldVnode.removeAttribute(SSR_ATTR)
-            hydrating = true
+            hydrating = true // TODO
           }
           if (isTrue(hydrating)) {
+            // 第一次false 没有进入
             if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
               invokeInsertHook(vnode, insertedVnodeQueue, true)
               return oldVnode
@@ -868,13 +886,13 @@ export function createPatchFunction (backend) {
         }
 
         // replacing existing element
-        const oldElm = oldVnode.elm
-        const parentElm = nodeOps.parentNode(oldElm)
-
+        const oldElm = oldVnode.elm // #app dom el
+        const parentElm = nodeOps.parentNode(oldElm) // 为 body 元素
+        debugger
         // create new node
         createElm(
-          vnode,
-          insertedVnodeQueue,
+          vnode, // app 组件 Vnode
+          insertedVnodeQueue, // = []
           // extremely rare edge case: do not insert if old element is in a
           // leaving transition. Only happens when combining transition +
           // keep-alive + HOCs. (#4590)
