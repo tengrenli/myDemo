@@ -2,10 +2,10 @@ window.__WEEX__ = false
 // import Vue from '../source/platforms/web/entry-runtime'
 import Vue from '../source/platforms/web/entry-runtime-with-compiler'
 import App from './App.vue'
-import HelloWorld from './components/HelloWorld'
+// import HelloWorld from './components/HelloWorld'
 import testMyApp from './components/test'
 // Vue.config.productionTip = false
-Vue.component('HelloWorld', HelloWorld)
+// Vue.component('HelloWorld', HelloWorld)
 // window.myUse = Vue.use(
 //   {
 //     install () {

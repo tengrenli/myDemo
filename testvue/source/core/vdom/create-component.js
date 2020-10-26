@@ -30,7 +30,6 @@ import {
 // inline hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
   init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
-    debugger
     if (
       vnode.componentInstance &&
       !vnode.componentInstance._isDestroyed &&
@@ -179,10 +178,8 @@ export function createComponent (
 
   // install component management hooks onto the placeholder node
   // 挂载组件钩子方法
-  debugger
   // 重要点 挂载hooks init  prepatch insert  destroy  等钩子方法
   installComponentHooks(data)
-
   // return a placeholder vnode
   const name = Ctor.options.name || tag // 第二次为HelloWorld
   const vnode = new VNode(

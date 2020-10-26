@@ -230,7 +230,6 @@ export function createPatchFunction (backend) {
       // component also has set the placeholder vnode's elm.
       // in that case we can just return the element and be done.
       if (isDef(vnode.componentInstance)) {
-        debugger
         // 最后挂载点 组件
         initComponent(vnode, insertedVnodeQueue)
         insert(parentElm, vnode.elm, refElm)
@@ -837,7 +836,7 @@ export function createPatchFunction (backend) {
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     // 第一次 vm.$el = vm.__patch__(vm.$el, vnode = app 组件 Vnode 节点, hydrating = undefined, false /* removeOnly */)
     // 第二次 oldVnode = undefined vnode = app 组件 children = [Vnode] 有值了
-    debugger
+    
     // 新节点不存在，只存在老节点  调用destroy 生命周期
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
@@ -894,7 +893,6 @@ export function createPatchFunction (backend) {
         // replacing existing element
         const oldElm = oldVnode.elm // #app dom el
         const parentElm = nodeOps.parentNode(oldElm) // 为 body 元素
-        debugger
         // create new node
         createElm(
           vnode, // app 组件 Vnode

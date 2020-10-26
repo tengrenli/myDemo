@@ -23,7 +23,6 @@ export function parseComponent (
     customBlocks: [],
     errors: []
   }
-  debugger
   let depth = 0
   let currentBlock: ?SFCBlock = null
 

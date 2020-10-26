@@ -92,7 +92,6 @@ export function renderMixin (Vue: Class<Component>) {
 
   // 此方法作用为返回VNode
   Vue.prototype._render = function (): VNode {
-    debugger
     const vm: Component = this // 第一次为大Vue 实例
     const { render, _parentVnode } = vm.$options
 
