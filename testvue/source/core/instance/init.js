@@ -16,10 +16,11 @@ let uid = 0
 export function initMixin (Vue) {
   // Vue.prototype._init = function (options?: Object) {
   Vue.prototype._init = function (options) {
-    
+    // 第一次 为Vue 实例  第二次为App 实例
     const vm: Component = this
     console.log('this==>', this)
     console.log(this instanceof Vue)
+
     // a uid
     vm._uid = uid++
 
@@ -37,10 +38,11 @@ export function initMixin (Vue) {
     // merge options
     // 创建
     if (options && options._isComponent) {
+      // 第二次进入
       // optimize internal component instantiation
       // since dynamic options merging is pretty slow, and none of the
       // internal component options needs special treatment.
-      initInternalComponent(vm, options)
+      initInternalComponent(vm, options) // 把父级的一些配置合并到自身$options 上
     } else {
       // 合并options
       vm.$options = mergeOptions(
@@ -69,7 +71,7 @@ export function initMixin (Vue) {
     // 有关inject 相关配置 // TODO
     initInjections(vm) // resolve injections before data/props
     // vm._watchers = []
-    // initProps(vm, vm.$options.props)/ initMethods(vm, vm.$options.methods) 
+    // initProps(vm, vm.$options.props)/ initMethods(vm, vm.$options.methods)
     // initData(vm) / initComputed(vm, vm.$options.computed) / initWatch(vm, vm.$options.watch)
     initState(vm)
     // vm._provided // TODO
@@ -85,6 +87,7 @@ export function initMixin (Vue) {
     }
 
     if (vm.$options.el) {
+      // 第二次不会再进入
       vm.$mount(vm.$options.el)
     }
   }
@@ -94,6 +97,7 @@ export function initInternalComponent (
   vm: Component,
   options: InternalComponentOptions
 ) {
+  // 此时为入口 new Vue 时的options
   const opts = (vm.$options = Object.create(vm.constructor.options))
   // doing this because it's faster than dynamic enumeration.
   const parentVnode = options._parentVnode

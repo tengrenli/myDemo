@@ -1,17 +1,29 @@
 <template>
   <div id="app">
-    <HelloWorld msg-a-b="Welcome to Your Vue.js App"/>
+    11
+    <!-- <HelloWorld msg-a-b="Welcome to Your Vue.js App"/> -->
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'App',
   computed: {
     myComputed () {
       return true
     }
+  },
+  beforeCreate () {
+    console.log('component app beforeCreate')
+  },
+  created () {
+    console.log('component app created')
+  },
+  beforeMount() {
+    console.log('component app beforeMount')
+  },
+  mounted () {
+    console.log('component app mounted')
   }
 }
 </script>

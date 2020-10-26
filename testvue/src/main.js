@@ -43,9 +43,15 @@ window.myVue = new Vue({
   },
   // render: h => h(App),
   beforeCreate () {
-    console.log('app beforeCreate')
+    console.log('main app beforeCreate')
+  },
+  created() {
+    console.log('main app created')
+  },
+  beforeMount () { 
+    console.log('main app beforeMount')
   },
   mounted () {
-    console.log('app mounted')
+    console.log('main app mounted')
   }
 })

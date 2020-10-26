@@ -30,6 +30,7 @@ import {
 // inline hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
   init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
+    debugger
     if (
       vnode.componentInstance &&
       !vnode.componentInstance._isDestroyed &&
@@ -39,6 +40,7 @@ const componentVNodeHooks = {
       const mountedNode: any = vnode // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode)
     } else {
+      // 执行完组件this._init 方法  初始化相关操作  child 为app 组件实例
       const child = (vnode.componentInstance = createComponentInstanceForVnode(
         vnode,
         activeInstance
@@ -93,12 +95,13 @@ const componentVNodeHooks = {
 
 const hooksToMerge = Object.keys(componentVNodeHooks)
 
+// 作用返回组件VNode 调用 new VNode
 export function createComponent (
-  Ctor: Class<Component> | Function | Object | void, // 第一次进入 为app组件
+  Ctor: Class<Component> | Function | Object | void, // 第一次进入 为app组件 第二次为 VueComponent Function
   data: ?VNodeData, // 第一次 undefined
-  context: Component, // Vue 实例
+  context: Component, // Vue 实例  第二次为app组件实例
   children: ?Array<VNode>, // 第一次 undefined
-  tag?: string // 第一次 undefined
+  tag?: string // 第一次 undefined  第二次为HelloWorld
 ): VNode | Array<VNode> | void {
   if (isUndef(Ctor)) {
     return
@@ -149,7 +152,7 @@ export function createComponent (
   // extract props
   const propsData = extractPropsFromVNodeData(data, Ctor, tag)
 
-  // functional component  函数组件 // TODO 
+  // functional component  函数组件 // TODO
   if (isTrue(Ctor.options.functional)) {
     return createFunctionalComponent(Ctor, propsData, data, context, children)
   }
@@ -177,10 +180,11 @@ export function createComponent (
   // install component management hooks onto the placeholder node
   // 挂载组件钩子方法
   debugger
+  // 重要点 挂载hooks init  prepatch insert  destroy  等钩子方法
   installComponentHooks(data)
 
   // return a placeholder vnode
-  const name = Ctor.options.name || tag
+  const name = Ctor.options.name || tag // 第二次为HelloWorld
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
     data,
@@ -205,7 +209,7 @@ export function createComponent (
 
 export function createComponentInstanceForVnode (
   vnode: any, // we know it's MountedComponentVNode but flow doesn't
-  parent: any // activeInstance in lifecycle state
+  parent: any // activeInstance in lifecycle state 第一次为 vue 实例 vm
 ): Component {
   const options: InternalComponentOptions = {
     _isComponent: true,
@@ -213,12 +217,14 @@ export function createComponentInstanceForVnode (
     parent
   }
   // check inline-template render functions
-  const inlineTemplate = vnode.data.inlineTemplate
+  const inlineTemplate = vnode.data.inlineTemplate // vnode.data = {hooks, on}
   if (isDef(inlineTemplate)) {
+    // 第一次 undefined
     options.render = inlineTemplate.render
     options.staticRenderFns = inlineTemplate.staticRenderFns
   }
-  return new vnode.componentOptions.Ctor(options)
+  // options = {parent : vm, _isComponent: true, _parentVnode: App Vnode}
+  return new vnode.componentOptions.Ctor(options) // 执行的为 this._init  // 此方法为 Vue.extend 继承自父级
 }
 
 function installComponentHooks (data: VNodeData) {

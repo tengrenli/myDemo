@@ -43,11 +43,11 @@ export function createElement (
 }
 
 export function _createElement (
-  context: Component, // vm 实例
-  tag?: string | Class<Component> | Function | Object, // app  组件
-  data?: VNodeData, //  app 时 此参数为undefined
+  context: Component, // vm 实例  第二次进入为app 组件实例
+  tag?: string | Class<Component> | Function | Object, // app  组件 // 第二次为HelloWorld
+  data?: VNodeData, //  app 时 此参数为undefined  第二次 data = {attrs: 'msg-a-b'}
   children?: any,
-  normalizationType?: number
+  normalizationType?: number // 第二次为undefined
 ): VNode | Array<VNode> {
   // VNodeData不能为响应式
   if (isDef(data) && isDef((data: any).__ob__)) {
@@ -91,7 +91,7 @@ export function _createElement (
   }
   // 对所有children normalize
   if (normalizationType === ALWAYS_NORMALIZE) {
-    // 第一次 app 为true
+    // 第一次 app 为true  作用拍平？
     children = normalizeChildren(children)
   } else if (normalizationType === SIMPLE_NORMALIZE) {
     children = simpleNormalizeChildren(children)
@@ -99,7 +99,8 @@ export function _createElement (
   let vnode, ns
 
   // tag 为字符串
-  if (typeof tag === 'string') {
+  if (typeof tag === 'string') { // 第二次进入 tag = HelloWorld
+    // 
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
     if (config.isReservedTag(tag)) {
@@ -126,7 +127,7 @@ export function _createElement (
       (!data || !data.pre) &&
       isDef((Ctor = resolveAsset(context.$options, 'components', tag)))
     ) {
-      // component   第一次 跟组件会进来
+      // component    第二次进入 App
       vnode = createComponent(Ctor, data, context, children, tag)
     } else {
       // unknown or unlisted namespaced elements
@@ -143,6 +144,7 @@ export function _createElement (
   if (Array.isArray(vnode)) {
     return vnode
   } else if (isDef(vnode)) {
+    // 第一次进入此逻辑
     // 命名空间处理
     if (isDef(ns)) applyNS(vnode, ns)
     // 处理 :class 、:style

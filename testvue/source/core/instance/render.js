@@ -20,7 +20,7 @@ export function initRender (vm: Component) {
   vm._vnode = null // the root of the child tree
   vm._staticTrees = null // v-once cached trees
   const options = vm.$options
-  const parentVnode = vm.$vnode = options._parentVnode // the placeholder node in parent tree
+  const parentVnode = (vm.$vnode = options._parentVnode) // the placeholder node in parent tree
   const renderContext = parentVnode && parentVnode.context
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
   vm.$scopedSlots = emptyObject
@@ -39,15 +39,39 @@ export function initRender (vm: Component) {
 
   /* istanbul ignore else */
   if (process.env.NODE_ENV !== 'production') {
-    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, () => {
-      !isUpdatingChildComponent && warn(`$attrs is readonly.`, vm)
-    }, true)
-    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, () => {
-      !isUpdatingChildComponent && warn(`$listeners is readonly.`, vm)
-    }, true)
+    defineReactive(
+      vm,
+      '$attrs',
+      (parentData && parentData.attrs) || emptyObject,
+      () => {
+        !isUpdatingChildComponent && warn(`$attrs is readonly.`, vm)
+      },
+      true
+    )
+    defineReactive(
+      vm,
+      '$listeners',
+      options._parentListeners || emptyObject,
+      () => {
+        !isUpdatingChildComponent && warn(`$listeners is readonly.`, vm)
+      },
+      true
+    )
   } else {
-    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true)
-    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, null, true)
+    defineReactive(
+      vm,
+      '$attrs',
+      (parentData && parentData.attrs) || emptyObject,
+      null,
+      true
+    )
+    defineReactive(
+      vm,
+      '$listeners',
+      options._parentListeners || emptyObject,
+      null,
+      true
+    )
   }
 }
 
@@ -66,10 +90,10 @@ export function renderMixin (Vue: Class<Component>) {
     return nextTick(fn, this)
   }
 
-  // 返回VNode 
+  // 此方法作用为返回VNode
   Vue.prototype._render = function (): VNode {
     debugger
-    const vm: Component = this
+    const vm: Component = this // 第一次为大Vue 实例
     const { render, _parentVnode } = vm.$options
 
     if (_parentVnode) {
@@ -89,7 +113,7 @@ export function renderMixin (Vue: Class<Component>) {
       // There's no need to maintain a stack because all render fns are called
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
-      console.log('render---',render)
+      console.log('render---', render)
       currentRenderingInstance = vm
       vnode = render.call(vm._renderProxy, vm.$createElement)
       console.log('vNode-=', vnode)
@@ -100,7 +124,11 @@ export function renderMixin (Vue: Class<Component>) {
       /* istanbul ignore else */
       if (process.env.NODE_ENV !== 'production' && vm.$options.renderError) {
         try {
-          vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
+          vnode = vm.$options.renderError.call(
+            vm._renderProxy,
+            vm.$createElement,
+            e
+          )
         } catch (e) {
           handleError(e, vm, `renderError`)
           vnode = vm._vnode
@@ -120,14 +148,14 @@ export function renderMixin (Vue: Class<Component>) {
       if (process.env.NODE_ENV !== 'production' && Array.isArray(vnode)) {
         warn(
           'Multiple root nodes returned from render function. Render function ' +
-          'should return a single root node.',
+            'should return a single root node.',
           vm
         )
       }
       vnode = createEmptyVNode()
     }
     // set parent
-    vnode.parent = _parentVnode
+    vnode.parent = _parentVnode // 第一次 为undefined
     return vnode
   }
 }

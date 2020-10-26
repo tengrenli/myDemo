@@ -35,11 +35,12 @@ export function initLifecycle (vm: Component) {
   // locate first non-abstract parent
   let parent = options.parent
   // 非抽象组件
+  // 第二次 parent 存在 为 大Vue实例
   if (parent && !options.abstract) {
     while (parent.$options.abstract && parent.$parent) {
       parent = parent.$parent
     }
-    parent.$children.push(vm)
+    parent.$children.push(vm) // 建立父子关系
   }
 
   vm.$parent = parent // 父组件为非抽象组件
@@ -58,6 +59,7 @@ export function initLifecycle (vm: Component) {
 
 export function lifecycleMixin (Vue: Class<Component>) {
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
+    // hydrating 第一次为undefined
     const vm: Component = this
     const prevEl = vm.$el
     const prevVnode = vm._vnode
@@ -74,7 +76,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
       vm.$el = vm.__patch__(prevVnode, vnode)
     }
     console.log('vm.$el===>', vm.$el)
-    restoreActiveInstance()
+    restoreActiveInstance() // 此方法作用待分析 // TODO
     // update __vue__ reference
     if (prevEl) {
       prevEl.__vue__ = null
