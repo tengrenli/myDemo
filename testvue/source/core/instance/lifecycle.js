@@ -63,7 +63,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
     const vm: Component = this
     const prevEl = vm.$el
     const prevVnode = vm._vnode
-    const restoreActiveInstance = setActiveInstance(vm)
+    const restoreActiveInstance = setActiveInstance(vm) // 更新当前实例 返回的为function 可以 获取到上一实例  activeInstance
     vm._vnode = vnode
     // Vue.prototype.__patch__ is injected in entry points
     // based on the rendering backend used.
@@ -76,7 +76,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
       vm.$el = vm.__patch__(prevVnode, vnode)
     }
     console.log('vm.$el===>', vm.$el)
-    restoreActiveInstance() // 此方法作用待分析 // TODO
+    restoreActiveInstance() // 恢复父级实例  此方法作用待分析 // TODO
     // update __vue__ reference
     if (prevEl) {
       prevEl.__vue__ = null

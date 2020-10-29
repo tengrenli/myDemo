@@ -95,7 +95,7 @@ export function renderMixin (Vue: Class<Component>) {
     const vm: Component = this // 第一次为大Vue 实例
     const { render, _parentVnode } = vm.$options
 
-    if (_parentVnode) {
+    if (_parentVnode) { // TODO
       vm.$scopedSlots = normalizeScopedSlots(
         _parentVnode.data.scopedSlots,
         vm.$slots,

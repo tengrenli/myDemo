@@ -150,7 +150,7 @@ export function createPatchFunction (backend) {
 
     const data = vnode.data
     const children = vnode.children
-    const tag = vnode.tag
+    const tag = vnode.tag   // 文本节点 tag = undefined
     if (isDef(tag)) {
       if (process.env.NODE_ENV !== 'production') {
         if (data && data.pre) {
@@ -216,20 +216,21 @@ export function createPatchFunction (backend) {
   // 此非彼方法
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     let i = vnode.data
-    
+
     if (isDef(i)) {
       // false
       const isReactivated = isDef(vnode.componentInstance) && i.keepAlive
       if (isDef((i = i.hook)) && isDef((i = i.init))) {
         // 此hook 插入的时间为 vdom/create-component.js installComponentHooks(data)    执行render => _createElement => vdom/create-component.js => createComponent
         // 执行hook init
-        i(vnode, false /* hydrating */)   // 循环开始 // TODO 
+        i(vnode, false /* hydrating */) // 循环开始 // TODO
       }
       // after calling the init hook, if the vnode is a child component
       // it should've created a child instance and mounted it. the child
       // component also has set the placeholder vnode's elm.
       // in that case we can just return the element and be done.
       if (isDef(vnode.componentInstance)) {
+        debugger
         // 最后挂载点 组件
         initComponent(vnode, insertedVnodeQueue)
         insert(parentElm, vnode.elm, refElm)
@@ -834,9 +835,10 @@ export function createPatchFunction (backend) {
   }
 
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
+    debugger
     // 第一次 vm.$el = vm.__patch__(vm.$el, vnode = app 组件 Vnode 节点, hydrating = undefined, false /* removeOnly */)
     // 第二次 oldVnode = undefined vnode = app 组件 children = [Vnode] 有值了
-    
+
     // 新节点不存在，只存在老节点  调用destroy 生命周期
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
@@ -887,7 +889,7 @@ export function createPatchFunction (backend) {
           }
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
-          oldVnode = emptyNodeAt(oldVnode) // 创建空节点
+          oldVnode = emptyNodeAt(oldVnode) // 创建空节点  第一次 oldVnode 为 div#app dom节点
         }
 
         // replacing existing element

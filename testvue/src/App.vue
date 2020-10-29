@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     11
-    <!-- <HelloWorld msg-a-b="Welcome to Your Vue.js App"/> -->
+    <HelloWorld msg-a-b="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
+import HelloWorld from '@/components/HelloWorld'
 export default {
   name: 'App',
+  components: { HelloWorld },
   computed: {
     myComputed () {
       return true
@@ -19,7 +21,7 @@ export default {
   created () {
     console.log('component app created')
   },
-  beforeMount() {
+  beforeMount () {
     console.log('component app beforeMount')
   },
   mounted () {

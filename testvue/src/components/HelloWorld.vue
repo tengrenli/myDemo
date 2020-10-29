@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
     <h1 @click="down">{{ msgAB }}</h1>
-    <p @click="count">{{ globalData.count }}</p>
+    <!-- <p @click="count">{{ globalData.count }}</p> -->
+    <!-- <test /> -->
     <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -32,8 +33,12 @@
 
 <script>
 import Vue from 'web/entry-runtime'
+import test from '@/components/test'
 export default {
   // name: 'HelloWorld',
+  components: {
+    test
+  },
   props: {
     'msg-a-b': String
   },
