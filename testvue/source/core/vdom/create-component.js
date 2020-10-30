@@ -210,7 +210,7 @@ export function createComponentInstanceForVnode (
 ): Component {
   const options: InternalComponentOptions = {
     _isComponent: true,
-    _parentVnode: vnode,
+    _parentVnode: vnode, // 渲染vnode 
     parent
   }
   // check inline-template render functions

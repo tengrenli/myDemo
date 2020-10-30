@@ -195,7 +195,7 @@ export function createPatchFunction (backend) {
       } else {
         createChildren(vnode, children, insertedVnodeQueue) // 在此循环插入节点 createElm => if (createComponent) => if ( i = vnode.data) 执行hooks this._init 执行 child.$mount
         if (isDef(data)) {
-          invokeCreateHooks(vnode, insertedVnodeQueue)
+          invokeCreateHooks(vnode, insertedVnodeQueue) // hook 插入 1
         }
         insert(parentElm, vnode.elm, refElm)
       }
@@ -230,9 +230,8 @@ export function createPatchFunction (backend) {
       // component also has set the placeholder vnode's elm.
       // in that case we can just return the element and be done.
       if (isDef(vnode.componentInstance)) {
-        debugger
         // 最后挂载点 组件
-        initComponent(vnode, insertedVnodeQueue)
+        initComponent(vnode, insertedVnodeQueue) // hook 插入 2
         insert(parentElm, vnode.elm, refElm)
         if (isTrue(isReactivated)) {
           reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm)
@@ -256,7 +255,7 @@ export function createPatchFunction (backend) {
       setScope(vnode)
     } else {
       // empty component root.
-      // skip all element-related modules except for ref (#3455)
+      // skip all element-related modul*es except for ref (#3455)
       registerRef(vnode)
       // make sure to invoke the insert hook
       insertedVnodeQueue.push(vnode)
@@ -835,7 +834,7 @@ export function createPatchFunction (backend) {
   }
 
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
-    debugger
+    
     // 第一次 vm.$el = vm.__patch__(vm.$el, vnode = app 组件 Vnode 节点, hydrating = undefined, false /* removeOnly */)
     // 第二次 oldVnode = undefined vnode = app 组件 children = [Vnode] 有值了
 
@@ -939,7 +938,7 @@ export function createPatchFunction (backend) {
         // destroy old node
         if (isDef(parentElm)) {
           removeVnodes([oldVnode], 0, 0)
-        } else if (isDef(oldVnode.tag)) {
+        } else if (isDef(oldVnode.tag)) { 
           invokeDestroyHook(oldVnode)
         }
       }

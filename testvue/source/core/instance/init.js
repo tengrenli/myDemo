@@ -16,10 +16,11 @@ let uid = 0
 export function initMixin (Vue) {
   // Vue.prototype._init = function (options?: Object) {
   Vue.prototype._init = function (options) {
+    // debugger
     // 第一次 为Vue 实例  第二次为App 实例
     const vm: Component = this
-    console.log('this==>', this)
-    console.log(this instanceof Vue)
+    // console.log('this==>', this)
+    // console.log(this instanceof Vue)
 
     // a uid
     vm._uid = uid++
@@ -100,7 +101,7 @@ export function initInternalComponent (
   // 此时为入口 new Vue 时的options
   const opts = (vm.$options = Object.create(vm.constructor.options))
   // doing this because it's faster than dynamic enumeration.
-  const parentVnode = options._parentVnode
+  const parentVnode = options._parentVnode // 占位符vnode ?
   opts.parent = options.parent
   opts._parentVnode = parentVnode
 

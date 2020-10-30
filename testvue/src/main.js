@@ -3,7 +3,7 @@ window.__WEEX__ = false
 import Vue from '../source/platforms/web/entry-runtime-with-compiler'
 import App from './App.vue'
 // import HelloWorld from './components/HelloWorld'
-import testMyApp from './components/test'
+// import testMyApp from './components/test'
 // Vue.config.productionTip = false
 // Vue.component('HelloWorld', HelloWorld)
 // window.myUse = Vue.use(
@@ -32,10 +32,29 @@ import testMyApp from './components/test'
 // new myApp().$mount('#myApp')
 // console.log(myApp)
 // myApp.$mount('#myApp')
+const comp = {
+  template: '<div>{{msg}}</div>',
+  data () {
+    return {
+      msg: 'hello world'
+    }
+  },
+  created () {
+    console.log('comp created')
+  },
+  mounted () {
+    console.log('comp mounted')
+  }
+}
+Vue.mixin({
+  created () {
+    console.log('mixin created')
+  }
+})
 window.__vue__ = Vue
 window.myVue = new Vue({
   el: '#app',
-  render: h => h(App),
+  render: h => h(comp),
   data () {
     return {
       message: 'hello world'
@@ -45,10 +64,10 @@ window.myVue = new Vue({
   beforeCreate () {
     console.log('main app beforeCreate')
   },
-  created() {
+  created () {
     console.log('main app created')
   },
-  beforeMount () { 
+  beforeMount () {
     console.log('main app beforeMount')
   },
   mounted () {

@@ -112,10 +112,10 @@ export function renderMixin (Vue: Class<Component>) {
       // There's no need to maintain a stack because all render fns are called
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
-      console.log('render---', render)
+      // console.log('render---', render)
       currentRenderingInstance = vm
       vnode = render.call(vm._renderProxy, vm.$createElement)
-      console.log('vNode-=', vnode)
+      // console.log('vNode-=', vnode)
     } catch (e) {
       handleError(e, vm, `render`)
       // return error render result,

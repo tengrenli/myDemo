@@ -75,7 +75,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
       // updates
       vm.$el = vm.__patch__(prevVnode, vnode)
     }
-    console.log('vm.$el===>', vm.$el)
+    // console.log('vm.$el===>', vm.$el)
     restoreActiveInstance() // 恢复父级实例  此方法作用待分析 // TODO
     // update __vue__ reference
     if (prevEl) {
@@ -222,6 +222,7 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  // $vnode 为父vnode , 如果没有代表根vnode
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')

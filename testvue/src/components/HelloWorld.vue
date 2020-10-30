@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <h1 @click="down">{{ msgAB }}</h1>
+    222
+    <!-- <h1 @click="down">{{ msgAB }}</h1> -->
     <!-- <p @click="count">{{ globalData.count }}</p> -->
     <!-- <test /> -->
     <!-- <p>
