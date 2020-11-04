@@ -222,7 +222,7 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
-  // $vnode 为父vnode , 如果没有代表根vnode
+  // $vnode 为父vnode , 
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')

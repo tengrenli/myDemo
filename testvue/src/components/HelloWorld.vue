@@ -53,23 +53,29 @@ export default {
       testData: 2
     }
   },
-  created () {
-    console.log('$data', this.$data)
-    console.log('$props', this.$props)
-    console.log('33333', this._data.testData)
-    this.globalData = this.$options._base.observable({ count: 0 })
-  },
+  // created () {
+  //   console.log('$data', this.$data)
+  //   console.log('$props', this.$props)
+  //   console.log('33333', this._data.testData)
+  //   this.globalData = this.$options._base.observable({ count: 0 })
+  // },
   mounted () {
-    console.log(this.$options._base.observable)
-    console.log(this)
+    setTimeout(() => {
+      this.testData = 333
+    }, 2000)
+    // console.log(this.$options._base.observable)
+    // console.log(this)
 
-    console.log(this.globalData)
-    this.$watch('globalData.count', function (newVal, oldVal) {
-      console.log('$watc cb=>', newVal, oldVal)
-    })
+    // console.log(this.globalData)
+    // this.$watch('globalData.count', function (newVal, oldVal) {
+    //   console.log('$watc cb=>', newVal, oldVal)
+    // })
   },
-  destroyed () {
-    console.log('is destoryed')
+  // destroyed () {
+  //   console.log('is destoryed')
+  // },
+  updated() {
+    console.log('hellowrod component updated')
   },
   methods: {
     down () {

@@ -46,15 +46,15 @@ const comp = {
     console.log('comp mounted')
   }
 }
-Vue.mixin({
-  created () {
-    console.log('mixin created')
-  }
-})
+// Vue.mixin({
+//   created () {
+//     console.log('mixin created')
+//   }
+// })
 window.__vue__ = Vue
 window.myVue = new Vue({
   el: '#app',
-  render: h => h(comp),
+  render: h => h(App),
   data () {
     return {
       message: 'hello world'

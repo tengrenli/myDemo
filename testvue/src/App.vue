@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     11
-    <!-- <HelloWorld msg-a-b="Welcome to Your Vue.js App" /> -->
+    <HelloWorld msg-a-b="Welcome to Your Vue.js App" />
   </div>
 </template>
 
@@ -26,7 +26,10 @@ export default {
   },
   mounted () {
     console.log('component app mounted')
-  }
+  },
+  updated() {
+    console.log('app updated')
+  },
 }
 </script>
 
