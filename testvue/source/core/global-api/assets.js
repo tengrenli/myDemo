@@ -16,10 +16,11 @@ export function initAssetRegisters (Vue: GlobalAPI) {
         return this.options[type + 's'][id]
       } else {
         /* istanbul ignore if */
+        // 校验组件名称
         if (process.env.NODE_ENV !== 'production' && type === 'component') {
           validateComponentName(id)
         }
-        if (type === 'component' && isPlainObject(definition)) {
+        if (type === 'component' && isPlainObject(definition)) { // 为object
           definition.name = definition.name || id
           definition = this.options._base.extend(definition)
         }

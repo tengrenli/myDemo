@@ -1,15 +1,24 @@
 <template>
   <div id="app">
-    11
-    <HelloWorld msg-a-b="Welcome to Your Vue.js App" />
+    <h1>hello app</h1>
+    <p>
+      <router-link to="/foo">Go to Foo</router-link>
+    </p>
+    <p>
+      <router-link to="/bar">Go to Bar</router-link>
+    </p>
+    <router-view></router-view>
+    <!-- 11
+    <!-- <test-template/> -->
+    <!-- <HelloWorld msg-a-b="Welcome to Your Vue.js App" /> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld'
+// import HelloWorld from '@/components/HelloWorld'
 export default {
   name: 'App',
-  components: { HelloWorld },
+  // components: { HelloWorld },
   computed: {
     myComputed () {
       return true
@@ -27,9 +36,9 @@ export default {
   mounted () {
     console.log('component app mounted')
   },
-  updated() {
+  updated () {
     console.log('app updated')
-  },
+  }
 }
 </script>
 

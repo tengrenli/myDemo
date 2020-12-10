@@ -439,6 +439,7 @@ export function resolveAsset (
   id: string,
   warnMissing?: boolean
 ): any {
+ 
   /* istanbul ignore if */
   if (typeof id !== 'string') {
     return
@@ -446,9 +447,9 @@ export function resolveAsset (
   const assets = options[type]
   // check local registration variations first
   if (hasOwn(assets, id)) return assets[id]
-  const camelizedId = camelize(id)
+  const camelizedId = camelize(id) // id 最后一个单词首字母转大写
   if (hasOwn(assets, camelizedId)) return assets[camelizedId]
-  const PascalCaseId = capitalize(camelizedId)
+  const PascalCaseId = capitalize(camelizedId) // 单词首字母转大写
   if (hasOwn(assets, PascalCaseId)) return assets[PascalCaseId]
   // fallback to prototype chain
   const res = assets[id] || assets[camelizedId] || assets[PascalCaseId]

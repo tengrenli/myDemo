@@ -105,12 +105,12 @@ export function createComponent (
   if (isUndef(Ctor)) {
     return
   }
-
+ 
   // 大 Vue 构造函数
   const baseCtor = context.$options._base
 
   // plain options object: turn it into a constructor
-  if (isObject(Ctor)) {
+  if (isObject(Ctor)) {  
     Ctor = baseCtor.extend(Ctor)
   }
 

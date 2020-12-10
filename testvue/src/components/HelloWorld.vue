@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Vue from 'web/entry-runtime'
+// import Vue from 'web/entry-runtime'
 import test from '@/components/test'
 export default {
   // name: 'HelloWorld',
