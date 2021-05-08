@@ -1,44 +1,54 @@
 <template>
   <div id="app">
-    <h1>hello app</h1>
-    <p>
+    11
+    <!-- <h1>hello app</h1> -->
+    <!-- <p>
       <router-link to="/foo">Go to Foo</router-link>
     </p>
     <p>
       <router-link to="/bar">Go to Bar</router-link>
     </p>
-    <router-view></router-view>
+    <router-view></router-view> -->
     <!-- 11
     <!-- <test-template/> -->
-    <!-- <HelloWorld msg-a-b="Welcome to Your Vue.js App" /> -->
+    <HelloWorld :msg-a-b="msg" />
+    <!-- <HelloWorld :msg-a-b="msg" /> -->
   </div>
 </template>
 
 <script>
-// import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '@/components/HelloWorld'
 export default {
   name: 'App',
-  // components: { HelloWorld },
+  components: { HelloWorld },
   computed: {
     myComputed () {
       return true
     }
   },
+  data () {
+    return {
+      msg: [1,2,3]
+    }
+  },
   beforeCreate () {
     console.log('component app beforeCreate')
   },
-  created () {
-    console.log('component app created')
-  },
-  beforeMount () {
-    console.log('component app beforeMount')
-  },
+  // created () {
+  //   console.log('component app created')
+  // },
+  // beforeMount () {
+  //   console.log('component app beforeMount')
+  // },
   mounted () {
+    // setTimeout(()=> {
+    //   this.$set(this.msg, 2, 10)
+    // }, 2000)
     console.log('component app mounted')
   },
-  updated () {
-    console.log('app updated')
-  }
+  // updated () {
+  //   console.log('app updated')
+  // }
 }
 </script>
 

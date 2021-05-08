@@ -1,5 +1,9 @@
 {
   "devDependencies": {
     "vue-router": "^3.4.9"
+  },
+  "dependencies": {
+    "@types/path-to-regexp": "^1.7.0",
+    "path-to-regexp": "^6.2.0"
   }
 }

@@ -16,7 +16,7 @@ let uid = 0
 export function initMixin (Vue) {
   // Vue.prototype._init = function (options?: Object) {
   Vue.prototype._init = function (options) {
-    // debugger
+    debugger
     // 第一次 为Vue 实例  第二次为App 实例
     const vm: Component = this
     // console.log('this==>', this)
@@ -47,13 +47,14 @@ export function initMixin (Vue) {
     } else {
       // 合并options
       vm.$options = mergeOptions(
-        resolveConstructorOptions(vm.constructor), // Vue
+        resolveConstructorOptions(vm.constructor), // Vue.options
         options || {},
         vm
       )
+      // debugger
     }
     /* istanbul ignore else */
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production') { // proxy 判断
       initProxy(vm)
     } else {
       vm._renderProxy = vm
@@ -117,22 +118,28 @@ export function initInternalComponent (
   }
 }
 
+// 配置和并  把父配置 合并到 子上面
 export function resolveConstructorOptions (Ctor: Class<Component>) {
   let options = Ctor.options
-  if (Ctor.super) {
-    const superOptions = resolveConstructorOptions(Ctor.super)
+  // console.log('Ctor=', Ctor.options)
+  // console.log('Ctor= suerp', Ctor.super)
+  if (Ctor.super) { // 继承自 Vue  递归调用   merge options
+    const superOptions = resolveConstructorOptions(Ctor.super) 
+    // console.log('合并==', Ctor.superOptions)
     const cachedSuperOptions = Ctor.superOptions
     if (superOptions !== cachedSuperOptions) {
       // super option changed,
       // need to resolve new options.
       Ctor.superOptions = superOptions
       // check if there are any late-modified/attached options (#4976)
+      // 检查是否有修改的配置
       const modifiedOptions = resolveModifiedOptions(Ctor)
       // update base extend options
       if (modifiedOptions) {
         extend(Ctor.extendOptions, modifiedOptions)
       }
       options = Ctor.options = mergeOptions(superOptions, Ctor.extendOptions)
+      // console.log('options.name==', options.name)
       if (options.name) {
         options.components[options.name] = Ctor
       }
@@ -141,6 +148,7 @@ export function resolveConstructorOptions (Ctor: Class<Component>) {
   return options
 }
 
+// 判断是否配置有变更
 function resolveModifiedOptions (Ctor: Class<Component>): ?Object {
   let modified
   const latest = Ctor.options

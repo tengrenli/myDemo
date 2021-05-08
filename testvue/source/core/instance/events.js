@@ -51,6 +51,7 @@ export function updateComponentListeners (
 
 export function eventsMixin (Vue: Class<Component>) {
   const hookRE = /^hook:/
+  // 监听当前实例上的自定义事件
   Vue.prototype.$on = function (event: string | Array<string>, fn: Function): Component {
     const vm: Component = this
     if (Array.isArray(event)) {
@@ -87,7 +88,7 @@ export function eventsMixin (Vue: Class<Component>) {
       return vm
     }
     // array of events
-    if (Array.isArray(event)) {
+    if (Array.isArray(event)) { 
       for (let i = 0, l = event.length; i < l; i++) {
         vm.$off(event[i], fn)
       }

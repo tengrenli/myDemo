@@ -19,3 +19,5 @@ lifecycleMixin(Vue) // Vue.prototype._update / $forceUpdate / $destroy
 renderMixin(Vue) // Vue.prototype._render / $nextTick
 
 export default Vue
+
+// initMixin  

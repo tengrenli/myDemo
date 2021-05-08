@@ -151,7 +151,7 @@ export function createPatchFunction (backend) {
     const data = vnode.data
     const children = vnode.children
     const tag = vnode.tag   // 文本节点 tag = undefined
-    if (isDef(tag)) {
+    if (isDef(tag)) { // div 首次
       if (process.env.NODE_ENV !== 'production') {
         if (data && data.pre) {
           creatingElmInVPre++
@@ -299,6 +299,7 @@ export function createPatchFunction (backend) {
   function createChildren (vnode, children, insertedVnodeQueue) {
     if (Array.isArray(children)) {
       if (process.env.NODE_ENV !== 'production') {
+        // J检验是否使用了 相同key
         checkDuplicateKeys(children)
       }
       for (let i = 0; i < children.length; ++i) {
@@ -834,7 +835,7 @@ export function createPatchFunction (backend) {
   }
 
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
-    
+    // debugger
     // 第一次 vm.$el = vm.__patch__(vm.$el, vnode = app 组件 Vnode 节点, hydrating = undefined, false /* removeOnly */)
     // 第二次 oldVnode = undefined vnode = app 组件 children = [Vnode] 有值了
 
@@ -888,7 +889,9 @@ export function createPatchFunction (backend) {
           }
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
-          oldVnode = emptyNodeAt(oldVnode) // 创建空节点  第一次 oldVnode 为 div#app dom节点
+          // 真实dom 转化为 vnode 
+          // TODO
+          oldVnode = emptyNodeAt(oldVnode) //  第一次 oldVnode 为 div#app dom节点
         }
 
         // replacing existing element

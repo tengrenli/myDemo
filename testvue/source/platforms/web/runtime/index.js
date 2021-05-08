@@ -1,7 +1,7 @@
 /* @flow */
 
 import Vue from 'core/index'
-import config from 'core/config'
+import config from 'core/config' // 全局配置
 import { extend, noop } from 'shared/util'
 import { mountComponent } from '../../../core/instance/lifecycle'
 import { devtools, inBrowser } from 'core/util/index'
@@ -26,8 +26,8 @@ Vue.config.getTagNamespace = getTagNamespace
 Vue.config.isUnknownElement = isUnknownElement
 
 // install platform runtime directives & components
-extend(Vue.options.directives, platformDirectives)
-extend(Vue.options.components, platformComponents)
+extend(Vue.options.directives, platformDirectives) // inserted  componentUpdated
+extend(Vue.options.components, platformComponents) // Transition   TransitionGroup
 
 // install platform patch function
 Vue.prototype.__patch__ = inBrowser ? patch : noop
@@ -44,7 +44,7 @@ Vue.prototype.$mount = function (
 // devtools global hook
 /* istanbul ignore next */
 if (inBrowser) {
-  setTimeout(() => {
+  setTimeout(() => {  
     if (config.devtools) {
       if (devtools) {
         devtools.emit('init', Vue)

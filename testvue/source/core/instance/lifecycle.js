@@ -58,16 +58,18 @@ export function initLifecycle (vm: Component) {
 }
 
 export function lifecycleMixin (Vue: Class<Component>) {
+  // 1、 首次渲染 2、数据改变
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
     // hydrating 第一次为undefined
     const vm: Component = this
     const prevEl = vm.$el
-    const prevVnode = vm._vnode
+    const prevVnode = vm._vnode // 数据改变 更新时
     const restoreActiveInstance = setActiveInstance(vm) // 更新当前实例 返回的为function 可以 获取到上一实例  activeInstance
     vm._vnode = vnode
     // Vue.prototype.__patch__ is injected in entry points
     // based on the rendering backend used.
     // TODO  mark 通过__patch__ 生成真实dom
+    // patch 会执行相应的生命周期函数  patch 方法把vnode 挂载到body 中
     if (!prevVnode) {
       // initial render
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
@@ -137,7 +139,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
     if (vm.$el) {
       vm.$el.__vue__ = null
     }
-    // release circular reference (#6759)
+    // release circular reference (#6759)  
     if (vm.$vnode) {
       vm.$vnode.parent = null
     }
@@ -150,7 +152,7 @@ export function mountComponent (
   hydrating?: boolean
 ): Component {
   vm.$el = el // 缓存
-  if (!vm.$options.render) {
+  if (!vm.$options.render) { // 无render 方法  创建空节点
     vm.$options.render = createEmptyVNode
     if (process.env.NODE_ENV !== 'production') {
       /* istanbul ignore if */

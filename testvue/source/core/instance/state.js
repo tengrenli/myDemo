@@ -34,7 +34,7 @@ const sharedPropertyDefinition = {
   get: noop,
   set: noop
 }
-
+// 数据代理
 export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.get = function proxyGetter () {
     return this[sourceKey][key]
@@ -45,8 +45,9 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
+// props methods data computed watch  初始化 定义响应式
 export function initState (vm: Component) {
-  vm._watchers = []
+  vm._watchers = []  // 初始化 _watchers
   const opts = vm.$options
   if (opts.props) initProps(vm, opts.props)
   if (opts.methods) initMethods(vm, opts.methods)
@@ -67,6 +68,7 @@ function initProps (vm: Component, propsOptions: Object) {
   // cache prop keys so that future props updates can iterate using Array
   // instead of dynamic object key enumeration.
   const keys = (vm.$options._propKeys = [])
+  // 无 $parent 为根节点
   const isRoot = !vm.$parent
   // root instance props should be converted
   if (!isRoot) {
@@ -113,6 +115,7 @@ function initProps (vm: Component, propsOptions: Object) {
 
 function initData (vm: Component) {
   let data = vm.$options.data
+  // Vue 实例挂载 _data 属性
   data = vm._data = typeof data === 'function' ? getData(data, vm) : data || {}
   if (!isPlainObject(data)) {
     data = {}
@@ -154,7 +157,9 @@ export function getData (data: Function, vm: Component): any {
   // #7573 disable dep collection when invoking data getters
   pushTarget()
   try {
-    return data.call(vm, vm)
+    // return data.call(vm, vm)
+    // return data.bind(vm)(vm)
+    return data.apply(vm, [vm])
   } catch (e) {
     handleError(e, vm, `data()`)
     return {}
@@ -256,7 +261,7 @@ function createGetterInvoker (fn) {
     return fn.call(this, this)
   }
 }
-
+// methods 中的方法绑定到vm 实例中 同时绑定this
 function initMethods (vm: Component, methods: Object) {
   const props = vm.$options.props
   for (const key in methods) {

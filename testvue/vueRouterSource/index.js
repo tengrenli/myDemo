@@ -38,7 +38,7 @@ export default class VueRouter {
   afterHooks: Array<?AfterNavigationHook>
 
   constructor(options: RouterOptions = {}) {
-    debugger
+    // debugger
     this.app = null
     this.apps = []
     this.options = options  // routes 、 mode ...

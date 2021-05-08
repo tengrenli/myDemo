@@ -108,6 +108,7 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
  * returns the new observer if successfully observed,
  * or the existing observer if the value already has one.
  */
+// TODO
 export function observe (value: any, asRootData: ?boolean): Observer | void {
   // 不为对象 或 为node 节点
   if (!isObject(value) || value instanceof VNode) {
@@ -209,6 +210,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
       `Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`
     )
   }
+  // 数据为数组
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.length = Math.max(target.length, key)
     target.splice(key, 1, val)

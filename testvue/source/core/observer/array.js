@@ -17,7 +17,7 @@ const methodsToPatch = [
   'sort',
   'reverse'
 ]
-
+// pop push shift unshift sort reverse 
 /**
  * Intercept mutating methods and emit events
  */
@@ -26,6 +26,7 @@ methodsToPatch.forEach(function (method) {
   const original = arrayProto[method]
   def(arrayMethods, method, function mutator (...args) {
     const result = original.apply(this, args)
+    // console.log(this)
     const ob = this.__ob__
     let inserted
     switch (method) {
@@ -34,7 +35,10 @@ methodsToPatch.forEach(function (method) {
         inserted = args
         break
       case 'splice':
+        // inserted 为插入的数据
+        // console.log('splice==')
         inserted = args.slice(2)
+        // console.log('inserted', inserted)
         break
     }
     if (inserted) ob.observeArray(inserted)

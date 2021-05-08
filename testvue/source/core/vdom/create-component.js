@@ -28,6 +28,7 @@ import {
 } from '../../platforms/weex/runtime/recycle-list/render-component-template'
 
 // inline hooks to be invoked on component VNodes during patch
+// 组件钩子方法
 const componentVNodeHooks = {
   init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
     if (
@@ -102,6 +103,7 @@ export function createComponent (
   children: ?Array<VNode>, // 第一次 undefined
   tag?: string // 第一次 undefined  第二次为HelloWorld
 ): VNode | Array<VNode> | void {
+  // debugger
   if (isUndef(Ctor)) {
     return
   }
@@ -140,6 +142,7 @@ export function createComponent (
 
   // resolve constructor options in case global mixins are applied after
   // component constructor creation
+  // 合并配置
   resolveConstructorOptions(Ctor)
 
   // transform component v-model data into props & events

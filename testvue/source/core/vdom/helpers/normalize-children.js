@@ -17,7 +17,7 @@ import { isFalse, isTrue, isDef, isUndef, isPrimitive } from 'shared/util'
 // because functional components already normalize their own children.
 export function simpleNormalizeChildren (children: any) {
   for (let i = 0; i < children.length; i++) {
-    if (Array.isArray(children[i])) {
+    if (Array.isArray(children[i])) {  // 集合中存在集合 及拍平
       return Array.prototype.concat.apply([], children)
     }
   }
@@ -40,26 +40,30 @@ function isTextNode (node): boolean {
   return isDef(node) && isDef(node.text) && isFalse(node.isComment)
 }
 
+// 变为一维数组+
 function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNode> {
   const res = []
   let i, c, lastIndex, last
   for (i = 0; i < children.length; i++) {
     c = children[i]
+    // 为 null  undefined true false 等跳出本次循环
     if (isUndef(c) || typeof c === 'boolean') continue
+    // 最后一个索引
     lastIndex = res.length - 1
+    // 最后一条数据
     last = res[lastIndex]
     //  nested
     if (Array.isArray(c)) {
       if (c.length > 0) {
         c = normalizeArrayChildren(c, `${nestedIndex || ''}_${i}`)
         // merge adjacent text nodes
-        if (isTextNode(c[0]) && isTextNode(last)) {
+        if (isTextNode(c[0]) && isTextNode(last)) { // 优化点 ？
           res[lastIndex] = createTextVNode(last.text + (c[0]: any).text)
           c.shift()
         }
         res.push.apply(res, c)
       }
-    } else if (isPrimitive(c)) {
+    } else if (isPrimitive(c)) { // 基础类型
       if (isTextNode(last)) {
         // merge adjacent text nodes
         // this is necessary for SSR hydration because text nodes are
@@ -69,7 +73,7 @@ function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNo
         // convert primitive to vnode
         res.push(createTextVNode(c))
       }
-    } else {
+    } else { // 正常vnode ?
       if (isTextNode(c) && isTextNode(last)) {
         // merge adjacent text nodes
         res[lastIndex] = createTextVNode(last.text + c.text)

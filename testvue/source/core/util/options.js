@@ -379,11 +379,13 @@ function assertObjectType (name: string, value: any, vm: ?Component) {
  * Merge two option objects into a new one.
  * Core utility used in both instantiation and inheritance.
  */
+// 初始为 大Vue 合并配置。 再次为 app 组件合并配置， app 源于 Vue.extend 方法调用中使用了合并配置
 export function mergeOptions (
   parent: Object,
   child: Object,
   vm?: Component
 ): Object {
+  // debugger
   if (process.env.NODE_ENV !== 'production') {
     checkComponents(child)
   }

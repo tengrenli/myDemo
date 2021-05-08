@@ -1,7 +1,11 @@
 <template>
   <div class="hello">
     222
+    <test/>
     <!-- <h1 @click="down">{{ msgAB }}</h1> -->
+    <!-- <ul>
+      <li v-for='item in msgAB' :key='item'>{{item}}</li>
+    </ul> -->
     <!-- <p @click="count">{{ globalData.count }}</p> -->
     <!-- <test /> -->
     <!-- <p>
@@ -36,12 +40,14 @@
 // import Vue from 'web/entry-runtime'
 import test from '@/components/test'
 export default {
-  // name: 'HelloWorld',
+  name: 'HelloWorld',
   components: {
     test
   },
   props: {
-    'msg-a-b': String
+    'msg-a-b': {
+
+    }
   },
   watch: {
     // 'globalData.count' (newVal, oldVal) {
@@ -75,7 +81,7 @@ export default {
   //   console.log('is destoryed')
   // },
   updated() {
-    console.log('hellowrod component updated')
+    // console.log('hellowrod component updated')
   },
   methods: {
     down () {

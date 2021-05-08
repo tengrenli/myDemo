@@ -30,7 +30,8 @@ export function initRender (vm: Component) {
   // internal version is used by render functions compiled from templates
   vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
   // normalization is always applied for the public version, used in
-  // user-written render functions.  自定义render  Mark  // TODO
+  // user-written render functions.  自定义render  Mark  // TODO  
+  // 手写render 函数时使用
   vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
 
   // $attrs & $listeners are exposed for easier HOC creation.
@@ -113,6 +114,7 @@ export function renderMixin (Vue: Class<Component>) {
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       // console.log('render---', render)
+      // _renderProxy   initProxy 方法中定义  生产环境为this
       currentRenderingInstance = vm
       vnode = render.call(vm._renderProxy, vm.$createElement)
       // console.log('vNode-=', vnode)

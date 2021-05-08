@@ -185,6 +185,7 @@ export function getAndRemoveAttr (
   name: string,
   removeFromMap?: boolean
 ): ?string {
+  // debugger
   let val
   if ((val = el.attrsMap[name]) != null) {
     const list = el.attrsList

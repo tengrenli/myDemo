@@ -4,7 +4,7 @@ import config from 'core/config'
 import { warn, cached } from 'core/util/index'
 import { mark, measure } from 'core/util/perf'
 
-import Vue from './runtime/index'
+import Vue from './runtime/index' // 
 import { query } from './util/index'
 import { compileToFunctions } from './compiler/index'
 import {
@@ -70,8 +70,8 @@ Vue.prototype.$mount = function (
         template,
         {
           outputSourceRange: process.env.NODE_ENV !== 'production',
-          shouldDecodeNewlines,
-          shouldDecodeNewlinesForHref,
+          shouldDecodeNewlines, // 浏览器兼容处理
+          shouldDecodeNewlinesForHref, // 浏览器兼容处理
           delimiters: options.delimiters,
           comments: options.comments
         },

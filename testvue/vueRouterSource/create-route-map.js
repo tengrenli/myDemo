@@ -20,7 +20,7 @@ export function createRouteMap (
   const pathMap: Dictionary<RouteRecord> = oldPathMap || Object.create(null)
   // $flow-disable-line
   const nameMap: Dictionary<RouteRecord> = oldNameMap || Object.create(null)
-  debugger
+  // debugger
   routes.forEach(route => {
     addRouteRecord(pathList, pathMap, nameMap, route)
   })
@@ -82,12 +82,15 @@ function addRouteRecord (
 
   const pathToRegexpOptions: PathToRegexpOptions =
     route.pathToRegexpOptions || {}
+  
+  // 规范化path 路径 //  
   const normalizedPath = normalizePath(path, parent, pathToRegexpOptions.strict)
 
   if (typeof route.caseSensitive === 'boolean') {
     pathToRegexpOptions.sensitive = route.caseSensitive
   }
 
+  // 
   const record: RouteRecord = {
     path: normalizedPath,
     regex: compileRouteRegex(normalizedPath, pathToRegexpOptions),
@@ -98,7 +101,7 @@ function addRouteRecord (
     parent,
     matchAs,
     redirect: route.redirect,
-    beforeEnter: route.beforeEnter,
+    beforeEnter: route.beforeEnter, // 拦截
     meta: route.meta || {},
     props:
       route.props == null
@@ -134,10 +137,11 @@ function addRouteRecord (
       const childMatchAs = matchAs
         ? cleanPath(`${matchAs}/${child.path}`)
         : undefined
+      // 递归调用
       addRouteRecord(pathList, pathMap, nameMap, child, record, childMatchAs)
     })
   }
-
+  // 构建映射表
   if (!pathMap[record.path]) {
     pathList.push(record.path)
     pathMap[record.path] = record
@@ -170,7 +174,7 @@ function addRouteRecord (
       )
     }
   }
-
+  // 构建映射表
   if (name) {
     if (!nameMap[name]) {
       nameMap[name] = record

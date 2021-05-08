@@ -25,12 +25,13 @@ const ALWAYS_NORMALIZE = 2
 export function createElement (
   context: Component,
   tag: any,
-  data: any,
+  data: any, // Vnode 相关数据
   children: any,
   normalizationType: any,
   alwaysNormalize: boolean
 ): VNode | Array<VNode> {
-  if (Array.isArray(data) || isPrimitive(data)) {
+  // debugger
+  if (Array.isArray(data) || isPrimitive(data)) { // 判断data 是否传入
     normalizationType = children
     children = data
     data = undefined
@@ -41,6 +42,7 @@ export function createElement (
   return _createElement(context, tag, data, children, normalizationType)
 }
 
+// 作用返回vnode
 export function _createElement (
   context: Component, // vm 实例  第二次进入为app 组件实例
   tag?: string | Class<Component> | Function | Object, // app  组件 // 第二次为HelloWorld
@@ -48,8 +50,9 @@ export function _createElement (
   children?: any,
   normalizationType?: number // 第二次为undefined
 ): VNode | Array<VNode> {
+  debugger
   // VNodeData不能为响应式
-  if (isDef(data) && isDef((data: any).__ob__)) {
+  if (isDef(data) && isDef((data: any).__ob__)) { 
     process.env.NODE_ENV !== 'production' &&
       warn(
         `Avoid using observed data object as vnode data: ${JSON.stringify(
@@ -102,7 +105,7 @@ export function _createElement (
     // 
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
-    if (config.isReservedTag(tag)) {
+    if (config.isReservedTag(tag)) { // 是否为平台保留标签
       // platform built-in elements
       if (
         process.env.NODE_ENV !== 'production' &&
@@ -135,6 +138,7 @@ export function _createElement (
       vnode = new VNode(tag, data, children, undefined, undefined, context)
     }
   } else {
+    // debugger
     // 第一次 app  会进入
     // direct component options / constructor
     vnode = createComponent(tag, data, context, children)

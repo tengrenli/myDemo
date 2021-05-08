@@ -10,5 +10,6 @@ import platformModules from 'web/runtime/modules/index'
 // the directive module should be applied last, after all
 // built-in modules have been applied.
 const modules = platformModules.concat(baseModules)
-// console.log('modules==', modules)
+// console.log('modules==', modules)  vue 跨端
+
 export const patch: Function = createPatchFunction({ nodeOps, modules })

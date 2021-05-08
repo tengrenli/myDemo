@@ -6,7 +6,7 @@ import { createCompileToFunctionFn } from './to-function'
 
 export function createCompilerCreator (baseCompile: Function): Function {
   return function createCompiler (baseOptions: CompilerOptions) {
-    function compile (
+    function compile ( 
       template: string,
       options?: CompilerOptions
     ): CompiledResult {
