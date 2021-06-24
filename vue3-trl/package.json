@@ -1,0 +1,19 @@
+{
+  "name": "vue3-trl",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js"
+  },
+  "dependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "execa": "^5.1.1",
+    "rollup": "^2.52.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "typescript": "^4.3.4"
+  }
+}

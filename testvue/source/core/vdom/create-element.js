@@ -50,7 +50,7 @@ export function _createElement (
   children?: any,
   normalizationType?: number // 第二次为undefined
 ): VNode | Array<VNode> {
-  debugger
+  // debugger
   // VNodeData不能为响应式
   if (isDef(data) && isDef((data: any).__ob__)) { 
     process.env.NODE_ENV !== 'production' &&

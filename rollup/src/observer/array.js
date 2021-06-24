@@ -1,26 +1,35 @@
-let oldArrayPrototype = Array.prototype
-export let arrayMethods = Object.create(oldArrayPrototype)
+const oldArrayMethod = Array.prototype
+const methods = [
+  'push',
+  'pop',
+  'shift',
+  'unshift',
+  'splice',
+  'sort',
+  'reverse'
+]
+export const arrayMethods = Object.create(oldArrayMethod)
 
-let methods = ['push', 'shift', 'unshift', 'pop', 'reverse', 'sort', 'splice']
 
 methods.forEach(method => {
-  arrayMethods[method] = function (...args) {
-    oldArrayPrototype[method].call(this, ...args)
-    let ob = this.__ob__
-    let newInserted
+  arrayMethods[method] = function (..args) {
+    oldArrayMethod[method].call(this, ..args)
+    const ob = this.__ob__
+    let newInsertedData
     switch (method) {
       case 'push':
       case 'unshift':
-        newInserted = args
+        newInsertedData = args
+        break;
+      case splice:
+        newInsertedData = args.slice(2)
         break
-      case 'splice':
-        newInserted = args.slice(2)
       default:
         break
     }
 
-    if (newInserted) {
-      ob.observeArray(newInserted)
+    if (newInsertedData) {
+      ob.observeArray(newInsertedData)
     }
   }
 })

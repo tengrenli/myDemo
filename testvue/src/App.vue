@@ -1,34 +1,42 @@
 <template>
   <div id="app">
     11
-    <!-- <h1>hello app</h1> -->
-    <!-- <p>
+    <h1>hello app {{ msg }}</h1>
+    <ul>
+      <li v-for='item in list' :key='item.key'>{{ item.val}}</li>
+    </ul>
+    <p>
       <router-link to="/foo">Go to Foo</router-link>
     </p>
     <p>
       <router-link to="/bar">Go to Bar</router-link>
     </p>
-    <router-view></router-view> -->
+    <router-view></router-view>
     <!-- 11
     <!-- <test-template/> -->
-    <HelloWorld :msg-a-b="msg" />
+    <!-- <HelloWorld /> -->
     <!-- <HelloWorld :msg-a-b="msg" /> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld'
+// import HelloWorld from '@/components/HelloWorld'
 export default {
   name: 'App',
-  components: { HelloWorld },
+  // components: { HelloWorld },
   computed: {
-    myComputed () {
-      return true
-    }
+    // myComputed () {
+    //   return true
+    // }
   },
   data () {
     return {
-      msg: [1,2,3]
+      msg: [1, 2, 3],
+      list: [
+        { key: 'a', val: 'a' },
+        { key: 'b', val: 'b' },
+        { key: 'c', val: 'c' }
+      ]
     }
   },
   beforeCreate () {
@@ -45,7 +53,14 @@ export default {
     //   this.$set(this.msg, 2, 10)
     // }, 2000)
     console.log('component app mounted')
-  },
+    setTimeout(()=> {
+      this.list = [
+        { key: 'a', val: 'c' },
+        { key: 'b', val: 'c' },
+        { key: 'c', val: 'c' }
+      ]
+    }, 1500)
+  }
   // updated () {
   //   console.log('app updated')
   // }

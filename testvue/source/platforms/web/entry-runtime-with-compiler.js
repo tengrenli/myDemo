@@ -12,9 +12,20 @@ import {
   shouldDecodeNewlinesForHref
 } from './util/compat'
 
+const vm1 = new Vue({
+  data(){
+    return {
+      name: '22'
+    }
+  }
+})
+const {render} = compileToFunctions('<div >{{ name }}</div>')
+console.log('--------', render)
+const vnode = render.call(vm1)
+console.log('vnode====>', vnode )
 const idToTemplate = cached(id => {
   const el = query(id)
-  return el && el.innerHTML
+  return el && el.innerHTML 
 })
 
 const mount = Vue.prototype.$mount

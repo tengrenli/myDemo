@@ -49,6 +49,7 @@ export default class Watcher {
     options?: ?Object,
     isRenderWatcher?: boolean
   ) {
+    // debugger
     this.vm = vm
     if (isRenderWatcher) {
       // 渲染watcher ?
@@ -67,6 +68,8 @@ export default class Watcher {
     }
     this.cb = cb
     this.id = ++uid // uid for batching
+    console.log('watcher--', this.id)
+
     this.active = true
     this.dirty = this.lazy // for lazy watchers
     this.deps = []

@@ -3,11 +3,11 @@ window.__WEEX__ = false
 //  引入vue 带编译版本
 import Vue from '../source/platforms/web/entry-runtime-with-compiler'
 import App from './App.vue'
-// // import VueRouter from '../vueRouterSource/index'
-// // import VueRouter from 'vue-router'
-// import VueRouter from '../node_modules/vue-router/dist/vue-router.esm'
-// Vue.use(VueRouter)
-import HelloWorld from './components/HelloWorld'
+// import VueRouter from '../vueRouterSource/index'
+// import VueRouter from 'vue-router'
+import VueRouter from '../node_modules/vue-router/dist/vue-router.esm'
+Vue.use(VueRouter)
+// import HelloWorld from './components/HelloWorld'
 // import testMyApp from './components/test'
 // Vue.config.productionTip = false
 // Vue.component('HelloWorld', HelloWorld)
@@ -90,17 +90,17 @@ Vue.mixin({
     console.log('main app mounted 111')
   }
 })
-// const Foo = { template: '<div>foo</div>' }
-// const Bar = { template: '<div>bar</div>' }
-// const routes = [
-//   { path: '/foo', component: Foo },
-//   { path: '/bar', component: Bar }
-// ]
-// const router = new VueRouter({
-//   base: 'api/',
-//   mode: 'history',
-//   routes
-// })
+const Foo = { template: '<div>foo</div>' }
+const Bar = { template: '<div>bar</div>' }
+const routes = [
+  { path: '/foo', component: Foo },
+  { path: '/bar', component: Bar }
+]
+const router = new VueRouter({
+  base: 'api/',
+  mode: 'history',
+  routes
+})
 /**
  * end
  */
@@ -109,7 +109,7 @@ Vue.config.devtools = true
 window.__vue__ = Vue
 window.myVue = new Vue({
   el: '#app',
-  // router,
+  router,
   // render: h => h(App),
   data () {
     return {

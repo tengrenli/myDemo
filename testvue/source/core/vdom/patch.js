@@ -446,7 +446,8 @@ export function createPatchFunction (backend) {
     }
   }
 
-  function updateChildren (
+  // TODO
+  function updateChildren ( 
     parentElm,
     oldCh,
     newCh,
@@ -674,7 +675,7 @@ export function createPatchFunction (backend) {
     if (isUndef(vnode.text)) {
       if (isDef(oldCh) && isDef(ch)) {
         if (oldCh !== ch)
-          updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
+          updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)  // TODO
       } else if (isDef(ch)) {
         if (process.env.NODE_ENV !== 'production') {
           checkDuplicateKeys(ch)

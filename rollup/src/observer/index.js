@@ -1,5 +1,6 @@
 import { isObject } from '../utils'
-import { arrayMethods } from './array'
+import Dep from './dep'
+
 class Observer {
   constructor (data) {
     Object.defineProperty(data, '__ob__', {
@@ -7,48 +8,50 @@ class Observer {
       enumerable: false
     })
 
-    // 数组不对索引进行监测
     if (Array.isArray(data)) {
-      data.__proto__ = arrayMethods
       this.observeArray(data)
     } else {
       this.walk(data)
     }
   }
-
   observeArray (data) {
-    data.forEach(item => observe(item))
+    data.forEach(item => observe())
   }
-
   walk (data) {
     Object.keys(data).forEach(key => {
       defineReactive(data, key, data[key])
     })
   }
 }
+
 function defineReactive (data, key, value) {
   observe(value)
+  const dep = new Dep()
   Object.defineProperty(data, key, {
     get () {
-      console.log('get')
+      if (Dep.target) {
+        dep.depend()
+      }
       return value
     },
-    set (newValue) {
-      if (newValue === value) {
+    set (newVal) {
+      if (value === newVal) {
         return
       }
-      observe(newValue)
-      console.log('set')
-      value = newValue
+      console.log('update')
+      value = newVal
+      dep.notify()
     }
   })
 }
+
 export function observe (data) {
   if (!isObject(data)) {
     return
   }
+
   if (data.__ob__) {
     return
   }
-  new Observer(data)
+  return new Observer(data)
 }

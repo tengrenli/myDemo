@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     222
-    <test/>
+    <!-- <test/> -->
     <!-- <h1 @click="down">{{ msgAB }}</h1> -->
     <!-- <ul>
       <li v-for='item in msgAB' :key='item'>{{item}}</li>
@@ -38,16 +38,14 @@
 
 <script>
 // import Vue from 'web/entry-runtime'
-import test from '@/components/test'
+// import test from '@/components/test'
 export default {
   name: 'HelloWorld',
   components: {
-    test
+    // test
   },
   props: {
-    'msg-a-b': {
-
-    }
+    'msg-a-b': {}
   },
   watch: {
     // 'globalData.count' (newVal, oldVal) {
@@ -66,9 +64,16 @@ export default {
   //   this.globalData = this.$options._base.observable({ count: 0 })
   // },
   mounted () {
-    setTimeout(() => {
-      this.testData = 333
-    }, 2000)
+    console.log('_vnode===>', this._vnode)
+    console.log('$vnode===>', this.$vnode)
+    setTimeout(() => {}, 2000)
+    this.testData = 333
+
+    this.$nextTick().then(res => {
+      console.log('nextTick', res)
+    })
+      console.log('this===', this)
+
     // console.log(this.$options._base.observable)
     // console.log(this)
 
@@ -80,7 +85,7 @@ export default {
   // destroyed () {
   //   console.log('is destoryed')
   // },
-  updated() {
+  updated () {
     // console.log('hellowrod component updated')
   },
   methods: {

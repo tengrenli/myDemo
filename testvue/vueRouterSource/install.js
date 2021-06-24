@@ -12,6 +12,8 @@ export function install (Vue) {
   const isDef = v => v !== undefined
 
   const registerInstance = (vm, callVal) => {
+    console.log('------------------')
+    console.log(vm, callVal)
     let i = vm.$options._parentVnode
     if (
       isDef(i) &&
@@ -24,6 +26,7 @@ export function install (Vue) {
 
   Vue.mixin({
     beforeCreate () {
+      console.log('----------')
       if (isDef(this.$options.router)) {
         // new Vue 时 传入router  实例
         this._routerRoot = this
