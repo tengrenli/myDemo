@@ -1,0 +1,29 @@
+{
+  "name": "@z-ui/icon",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "tengrenli <tengrenli@gokuaidian.com>",
+  "homepage": "https://github.com/tengrenli/myDemo#readme",
+  "license": "ISC",
+  "main": "lib/icon.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.gokuaidian.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tengrenli/myDemo.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/tengrenli/myDemo/issues"
+  }
+}
